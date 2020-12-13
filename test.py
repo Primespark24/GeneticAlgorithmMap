@@ -27,32 +27,16 @@ class intersection:
 
 ################### MAIN CODE ###################
 
-################### ADDRESSES OF EAST STREETS ###################
+################### LIST OF EAST STREETS ###################
 NorthE =['N Stuart St', 'N Ruby St', 'N Mayfair St', 'N Colton St' 'N Lidgerwood St', 'N Astor St' 'N Addison St', 'N Wiscomb St' 'N Standard St', 'N Dakota St' 'N Cincinnati St', 'N Hamilton St', 'N Nevada St', 'N Columbus St', 'N Morton St', 'N Denver St', 'N Perry St', 'N Hogan St', 'N Helena St', 'N Madelia St', 'N Pittsburg St', 'N Magnolia St', 'N Napa St', 'N Martin St', 'N Crestline St', 'N Lee St', 'N Stone St', 'N Altamont St', 'N Cook St', 'N Smith St', 'N Lacey St', 'N Nelson St', 'N Regal St', 'N Haven St', 'N Market St']
-EastN = ['E Francist', 'E Decatur Ave', ]
+EastN = ['E Francis', 'E Decatur Ave', ]
 
-######################################
-# 0 - street does not exist in current location
-# 2 - Starting or stoping point of road
-# 1 - Connection exists
-###################################### 
-East = ['E Francis Ave'
-['E Francis Ave', ['0','']],
-['E Dalke Ave', ['1',]],
-['E Bismark Ave', ['X']],
-['E Bismark Ave', ['0']],
-['E Bismark Ave', ['0']],
-['E Bismark Ave', ['X']],
-['E Central Ave', ['1']]]
+################### LIST OF WEST STREETS ###################
 
-
-#['E Empire Ave', 'E Garland Ave', 'E Walton Ave', 'E Lacrosse Ave', 'E Rockwell Ave']
-################### ADDRESSES OF NORTH STREETS ###################
-NorthEastSide = ['N Stuart St', 'N Ruby St', 'N Mayfair St', 'N Colton St' 'N Lidgerwood St', 'N Astor St' 'N Addison St', 'N Standard St', 'N Cincinnati St']
 NorthWestSide = ['N Monroe St', 'N Lincoln St', 'N Post St', 'N Wall St', 'N Howard St', 'N Stevens St', 'N Washington St', 'N Whitehouse St', 'N Calispel St', 'N Normandie St', 'N Atlantic St', 'N Atlantic Dr', 'N Division St' ]
+
 ################## ADDRESSES OF WEST STREETS #####################
 West = [
-    #need to change all lines to follow the one below :(
     ['W Francis Ave', [intersection(2,2),intersection(2,2),intersection(2,2),intersection(2,2),intersection(2,2),intersection(2,2),intersection(2,2),intersection(2,2),intersection(2,2),intersection(2,2),intersection(2,2),intersection(0,0),intersection(2,2)]], 
     ['W Dalke Ave', ['2','1','1','1','1','1','1','1','1','1','1','0','2']],
     ['W Central Ave', ['2','1','1','1','1','1','1','1','1','1','1','0','2']], 
@@ -90,21 +74,21 @@ West = [
     ['W Fairview Ave', ['2','1','2','0','0','0','0','0','0','0','0','0','0']],
     ['W Waverly Pl', ['0','0','2','1','1','0','1','0','0','1','1','0','2']],
     ['W Cleveland Ave', ['2','1','1','1','1','0','1','1','1','1','2','0','0']],
-    ['W Grace Ave', 
-    ['W Buckeye Ave', 
-    ['W Chelan Ave', 
-    ['W York Ave', 
-    ['W Jackson Ave', 
-    ['W Carlisle Ave', 
-    ['W Montgomery Ave', 
-    ['W Mansfield Ave', 
-    ['W Knox Ave', 
-    ['W Shannon Ave', 
-    ['W Indiana Ave'
+    ['W Grace Ave', []],
+    ['W Buckeye Ave', []],
+    ['W Chelan Ave', []],
+    ['W York Ave', []],
+    ['W Jackson Ave', []],
+    ['W Carlisle Ave', []],
+    ['W Montgomery Ave', []],
+    ['W Mansfield Ave', []],
+    ['W Knox Ave', []],
+    ['W Shannon Ave', []],
+    ['W Indiana Ave'[]]]
 
-LRAddresses = []*4
+#LRAddresses = []*4
 
-"""
+
 # Geocoding an address
 geocode_result = gmaps.geocode('1600 Amphitheatre Parkway, Mountain View, CA')
 
@@ -139,4 +123,3 @@ for leg in directions['legs']:
                 html_instructions3 += each
         print("STEP {} {}".format(i ,html_instructions3))
         i = i+1
-"""
