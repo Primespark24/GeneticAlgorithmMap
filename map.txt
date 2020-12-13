@@ -1,0 +1,126 @@
+# Brycen Martin, Jonathan Laughlin and Shane Snediker
+# Dr. Jones CS473
+# Genetic Algorithm Final Project
+# Updated December 13, 2020
+
+This text file is a representation of our city, to preserve the crossroad information
+We've split the city into 2 halves: West and East
+For the following representation, the first line contains the N/S crossroads in the order
+that they appear within the city from west to east (i.e. For the WEST half of our map,
+Monroe is our furthest west boundary and proceeding in the east direction is Lincoln, 
+Post, Wall, etc. For the EAST half, Division is the furthest WEST boundary and proceeding
+in the east direction is Stuart, Ruby, Mayfair, etc.)
+
+Therefore, following the first line is a column containing each of the W/E streets in the order
+that they appear within the city from north to south(i.e. For the WEST half of our map, Francis
+is our furthest NORTH boundary and proceeding in the south direction is Dalke, Central,
+Columbia, etc. For the EAST half, Francis is the furthest NORTH boundary and proceeding in the
+south direction is Decatur, Dalke, Bismark, etc.)
+
+MAP OF THE WEST SIDE OF OUR MINI CITY
+
+
+                     N Monroe St      N Lincoln St        N Post St        N Wall St       N Howard St        N Stevens St       N Washington St        N Whitehouse St        N Calispel St       N Normandie St        N Atlantic St       N Division St
+W Dalke Ave 
+W Central Ave 
+W Columbia Ave 
+W Joseph Ave 
+W Nebraska Ave 
+W Rowan Ave
+W Everett Ave 
+W Queen Ave 
+W Wabash Ave 
+W Wellesley Ave 
+W Princeton Ave 
+W Heroy Ave
+W Longfellow Ave 
+W Rockwell Ave 
+W Lacrosse Ave 
+W Walton Ave 
+W Garland Ave 
+W Providence Ave 
+W Kiernan Ave
+W Gordon Ave
+W Glass Ave
+W Courtland Ave 
+W Gray Ct
+W Cora Ave 
+W Alice Ave 
+W Dalton Ave 
+W Euclid Ave 
+W Frederick Ave 
+W Park Pl
+W Fairview Ave 
+W Waverly Pl 
+W Cleveland Ave 
+W Grace Ave
+W Buckeye Ave 
+W Chelan Ave 
+W York Ave 
+W Jackson Ave 
+W Carlisle Ave 
+W Montgomery Ave 
+W Mansfield Ave 
+W Knox Ave
+W Shannon Ave 
+W Indiana Ave
+
+MAP OF THE EAST SIDE OF OUR MINI CITY
+
+                 N Division St        N Stuart St         N Ruby St       N Mayfair St      N Colton St        N Lidgerwood St     N Astor St        N Addison St        N Wiscomb St     N Standard St         N Dakota St       N Cincinnati St        N Hamilton St       N Nevada St       N Columbus St      N Morton St     N Denver St       N Perry St      N Hogan St      N Helena St      N Madelia St    N Pittsburg St     N Magnolia St       N Napa St        N Martin St        N Crestline St       N Lee St        N Stone St       N Altamont St    N Cook St      N Smith St      N Lacey St      N Nelson St    N Regal St      N Haven St      N Market St
+E Francis
+E Decatur Ave
+E Dalke Ave
+E Bismark Ave
+E Central Ave
+E Columbia Ave
+E Joseph Ave
+E Nebraska Ave
+E Rowan Ave
+E North Ave
+E North-Sanson Alley
+E Sanson Ave
+E Everett Ave
+E Diamond Ave
+E Crown Ave
+E Queen Ave
+E Olympic Ave
+E Wabash Ave
+E Broad Ave
+E Wellesley Ave
+E Hoffman Ave
+E Princeton Ave
+E Heroy Ave
+E Longfellow Ave
+E Rich Ave
+E Rockwell Ave
+E Lacrosse Ave
+E Ostrander Ave
+E Walton Ave
+E Garland Ave
+E Empire Ave
+E Providence Ave
+E Kiernan Ave
+E Gordan Ave
+E Glass Ave
+E Garnet Ave
+E Courtland Ave
+E Bridgeport Ave
+E Liberty Ave
+E Dalton Ave
+E Euclid Ave
+E Fairview Ave
+E Cora Ave
+E Cleveland Ave
+E North Foothills Dr
+E Grace Ave
+E Buckeye Ave
+E Marietta Ave
+E Avon Pl
+E Jackson Ave
+E Charlisle Ave
+E Montgomery Ave
+E Illinois Ave
+E Ermina Ave
+E Baldwin Ave
+E Indiana Ave
