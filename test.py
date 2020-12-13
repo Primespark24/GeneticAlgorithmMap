@@ -21,7 +21,7 @@ class intersection:
         self.West = West
 
     def __repr__(self):
-        return "Left to right intersection:% s Up to down Intersection:% s" % (self.leftRight, self.leftRight)
+        return "North:% s South:% s East:% s West:% s" % (self.North, self.South, self.East, self.West)
 
 ################### MAIN CODE ###################
 
