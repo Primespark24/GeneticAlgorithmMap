@@ -1,0 +1,30 @@
+Project flow:
+	1. Pseudo Code
+	2. Figure out how to use Google API Map Data
+	3. Algorithm Definition
+	4. Real time data
+
+Goals:
+1. Connecting sufficiently to the Google Maps API
+2. We are able to sufficiently code a genetic algorithm bot (complete with well defined encoding,
+   reproduction, crossover and mutation)
+3. Our bot will actually get a delivery driver to an actual destination (optimized or not)
+4. Defining acceptable fitness (which will allow us to efficiently stop the GA from continuing
+   to calculate optimal routes)
+5. Given a fixed set of locations to deliver to, our bot is able to optimize paths to a fixed
+   set of delivery locations.
+6. The delivery locations are constantly (in real time) changing  
+
+
+
+Pseudo Code for Genetic Algorithm Project
+	-Define a bot that accesses Real map data and calculates the best/quickest route
+	-Encoding
+	-Reproduction
+	-Crossover
+	-Mutation
+
+ 
+Makeing intersection class to define where intersections of roads start and stop. 
+As in the borders of our array or which roads you are allowed to get on from which other roads.
+The numbers are a 0, 1, 2(0 standing for no road there, 1 for intersection to both roads, 2 for not allowed to contiune onto road/blockage in the way or road ends)	

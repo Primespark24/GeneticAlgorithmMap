@@ -59,6 +59,7 @@ I highly encourage each group to make a short project proposal to your instructo
 ### Deliverable #2: Final Project Readme.md File along  with the Final Project Due Thu Dec 17th at the final
 Your group will submit a Readme.md file along with your with all the code for your project to your shared Whitgit final project repository. This Readme.md file will contain
 * The title of your final project program.
+Title: 
 * A short description of the purpose and goals of the program. 
 * How to run the program.
 * What assumptions did you make when working on the project (e.g. knowledge level of users, etc.)?
@@ -66,16 +67,6 @@ Your group will submit a Readme.md file along with your with all the code for yo
 * __Works Cited__ This should includes any third party libraries used, any online sources and any code utilized that was not specifically written for this project. These citations should also be listed directly in your code.
 * This documentation is worth 5% of your over all grade, make it representative of that weight. A single page likely will not be detailed enough.
 * Your code must be appropriately commented. This includes headers for every method/function and file headers.
-
-
-Title: The Gaatetc Project
-Purpose: We want to use the unique abilities of a genetic algorithm to explore the city and find optimal delivery routes for a buisness.
-Goals: To create a program that can modify and create new routes for delivery using data delivered in real time.
-How to use: UNKOWN
-Assumption: UNKNOWN
-Description: UNKONWN ATM
-__Works Cited__ UNKNOWN
-
 
 ### Deliverable #3: Final Presentation Thu Dec 17th at the final 
 During the final time for your section, your group will give a presentation on the work that you accomplished. 
