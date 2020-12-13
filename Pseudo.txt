@@ -28,3 +28,7 @@ Pseudo Code for Genetic Algorithm Project
 Makeing intersection class to define where intersections of roads start and stop. 
 As in the borders of our array or which roads you are allowed to get on from which other roads.
 The numbers are a 0, 1, 2(0 standing for no road there, 1 for intersection to both roads, 2 for not allowed to contiune onto road/blockage in the way or road ends)	
+
+
+Assumptions: 
+-one ways do not exist in our map
