@@ -23,17 +23,21 @@ class intersection:
     def __repr__(self):
         return "Left to right intersection:% s Up to down Intersection:% s" % (self.leftRight, self.leftRight)
 
-#dgfkljsfjdfkfjkj
-
 ################### MAIN CODE ###################
 
 ################### LIST OF EAST STREETS ###################
+
+# All North/South streets east of Division street
 NorthE =['N Stuart St', 'N Ruby St', 'N Mayfair St', 'N Colton St' 'N Lidgerwood St', 'N Astor St' 'N Addison St', 'N Wiscomb St' 'N Standard St', 'N Dakota St' 'N Cincinnati St', 'N Hamilton St', 'N Nevada St', 'N Columbus St', 'N Morton St', 'N Denver St', 'N Perry St', 'N Hogan St', 'N Helena St', 'N Madelia St', 'N Pittsburg St', 'N Magnolia St', 'N Napa St', 'N Martin St', 'N Crestline St', 'N Lee St', 'N Stone St', 'N Altamont St', 'N Cook St', 'N Smith St', 'N Lacey St', 'N Nelson St', 'N Regal St', 'N Haven St', 'N Market St']
-EastN = ['E Francis', 'E Decatur Ave', ]
+# All East/West streets east of Division street
+East = ['E Francis', 'E Decatur Ave', ]
 
 ################### LIST OF WEST STREETS ###################
 
-NorthWestSide = ['N Monroe St', 'N Lincoln St', 'N Post St', 'N Wall St', 'N Howard St', 'N Stevens St', 'N Washington St', 'N Whitehouse St', 'N Calispel St', 'N Normandie St', 'N Atlantic St', 'N Atlantic Dr', 'N Division St' ]
+# All North/South streets west of Division street
+NorthW = ['N Monroe St', 'N Lincoln St', 'N Post St', 'N Wall St', 'N Howard St', 'N Stevens St', 'N Washington St', 'N Whitehouse St', 'N Calispel St', 'N Normandie St', 'N Atlantic St', 'N Atlantic Dr', 'N Division St' ]
+# All East/West streets west of Division streed
+West = []
 
 ################## ADDRESSES OF WEST STREETS #####################
 West = [
