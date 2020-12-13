@@ -84,9 +84,7 @@ West = [
     ['W Mansfield Ave', []],
     ['W Knox Ave', []],
     ['W Shannon Ave', []],
-    ['W Indiana Ave'[]]]
-
-#LRAddresses = []*4
+    ['W Indiana Ave',[]]]
 
 
 # Geocoding an address
