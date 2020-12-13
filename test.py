@@ -3,7 +3,8 @@ from datetime import datetime
 from googlemaps import Client
 gmaps = Client(key='AIzaSyCFcf_BmN1Qm1q-a3yy07RXtPHMgOiyZ-w')
 
-################### FUNCTIONS ###################
+################### CLASSES AND FUNCTIONS ###################
+
 def PathGenerator(Sequence, Addresses, Location = [1,1,2]):
     #UNSURE HOW TO HANDLE LOCATION
     Path = []
@@ -12,7 +13,10 @@ def PathGenerator(Sequence, Addresses, Location = [1,1,2]):
             Path.append(Addresses[0])
     return Path
 
-
+# A class for representing intersections
+# Constructor: takes 4 Boolean arguments (North, South, East, West). True
+#              if that direction is available to the bot, false otherwise
+# _repr_ : Printing the details of the intersection
 class intersection:
     def __init__(self, North, South, East, West):
         self.North = North
@@ -22,6 +26,7 @@ class intersection:
 
     def __repr__(self):
         return "North:% s South:% s East:% s West:% s" % (self.North, self.South, self.East, self.West)
+
 
 ################### MAIN CODE ###################
 
@@ -34,7 +39,7 @@ NorthE = ['N Stuart St', 'N Ruby St', 'N Mayfair St', 'N Colton St' 'N Lidgerwoo
 EastN = ['E Francist', 'E Decatur Ave', 'E Dalke Ave','E Bismark Ave', 'E Central Ave', 'E Columbia Ave', 'E Joseph Ave', 'E Nebraska Ave', 'E Rowan Ave', 'E North Ave', 'E North-Sanson Alley', 'E Sanson Ave', 'E Everett Ave','E Diamond Ave', 'E Crown Ave', 'E Queen Ave', 'E Olympic Ave', 'E Wabash Ave', 'E Broad Ave', 'E Wellesley Ave', 'E Hoffman Ave', 'E Princeton Ave', 'E Heroy Ave', 'E Longfellow Ave', 'E Rich Ave', 'E Rockwell Ave', 'E Lacrosse Ave', 'E Ostrander Ave', 'E Walton Ave', 'E Garland Ave', 'E Empire Ave', 'E Providence Ave', 'E Kiernan Ave', 'E Gordan Ave', 'E Glass Ave', 'E Garnet Ave', 'E Courtland Ave', 'E Bridgeport Ave', 'Liberty Ave', 'E Dalton Ave', 'E Euclid Ave', 'E Fairview Ave', 'E Cora Ave', 'E Cleveland Ave', 'E North Foothills Dr', 'E Grace Ave', 'E Buckeye Ave', 'E Marietta Ave', 'E Avon Pl', 'E Jackson Ave', 'E Charlisle Ave', 'E Montgomery Ave', 'E Illinois Ave', 'E Ermina Ave', 'E Baldwin Ave', 'E Indiana Ave']
 
 # East Addresses
-EastN = ['E Francist', 'E Decatur Ave', 'E Dalke Ave','E Bismark Ave', 'E Central Ave', 'E Columbia Ave', 'E Joseph Ave', 'E Nebraska Ave', 'E Rowan Ave', 'E North Ave', 'E North-Sanson Alley', 'E Sanson Ave', 'E Everett Ave','E Diamond Ave', 'E Crown Ave', 'E Queen Ave', 'E Olympic Ave', 'E Wabash Ave', 'E Broad Ave', 'E Wellesley Ave', 'E Hoffman Ave', 'E Princeton Ave', 'E Heroy Ave', 'E Longfellow Ave', 'E Rich Ave', 'E Rockwell Ave', 'E Lacrosse Ave', 'E Ostrander Ave', 'E Walton Ave', 'E Garland Ave', 'E Empire Ave', 'E Providence Ave', 'E Kiernan Ave', 'E Gordan Ave', 'E Glass Ave', 'E Garnet Ave', 'E Courtland Ave', 'E Bridgeport Ave', 'Liberty Ave', 'E Dalton Ave', 'E Euclid Ave', 'E Fairview Ave', 'E Cora Ave', 'E Cleveland Ave', 'E North Foothills Dr', 'E Grace Ave', 'E Buckeye Ave', 'E Marietta Ave', 'E Avon Pl', 'E Jackson Ave', 'E Charlisle Ave', 'E Montgomery Ave', 'E Illinois Ave', 'E Ermina Ave', 'E Baldwin Ave', 'E Indiana Ave']
+EastN = ['E Francist', 'E Decatur Ave', 'E Dalke Ave', 'E Bismark Ave', 'E Central Ave', 'E Columbia Ave', 'E Joseph Ave', 'E Nebraska Ave', 'E Rowan Ave', 'E North Ave', 'E North-Sanson Alley', 'E Sanson Ave', 'E Everett Ave','E Diamond Ave', 'E Crown Ave', 'E Queen Ave', 'E Olympic Ave', 'E Wabash Ave', 'E Broad Ave', 'E Wellesley Ave', 'E Hoffman Ave', 'E Princeton Ave', 'E Heroy Ave', 'E Longfellow Ave', 'E Rich Ave', 'E Rockwell Ave', 'E Lacrosse Ave', 'E Ostrander Ave', 'E Walton Ave', 'E Garland Ave', 'E Empire Ave', 'E Providence Ave', 'E Kiernan Ave', 'E Gordan Ave', 'E Glass Ave', 'E Garnet Ave', 'E Courtland Ave', 'E Bridgeport Ave', 'Liberty Ave', 'E Dalton Ave', 'E Euclid Ave', 'E Fairview Ave', 'E Cora Ave', 'E Cleveland Ave', 'E North Foothills Dr', 'E Grace Ave', 'E Buckeye Ave', 'E Marietta Ave', 'E Avon Pl', 'E Jackson Ave', 'E Charlisle Ave', 'E Montgomery Ave', 'E Illinois Ave', 'E Ermina Ave', 'E Baldwin Ave', 'E Indiana Ave']
 
 ######################################
 # 0 - street does not exist in current location
@@ -44,10 +49,10 @@ EastN = ['E Francist', 'E Decatur Ave', 'E Dalke Ave','E Bismark Ave', 'E Centra
 
 # All North/South streets west of Division street
 NorthW = ['N Monroe St', 'N Lincoln St', 'N Post St', 'N Wall St', 'N Howard St', 'N Stevens St', 'N Washington St', 'N Whitehouse St', 'N Calispel St', 'N Normandie St', 'N Atlantic St', 'N Atlantic Dr', 'N Division St' ]
-# All East/West streets west of Division streed
+# All East/West streets west of Division street
 West = []
 
-################## ADDRESSES OF WEST STREETS #####################
+################## INTERSECTION INFO FOR WESTSIDE STREETS #####################
 West = [
     #need to change all lines to follow the one below :(
     ['W Francis Ave', [intersection(2,2),intersection(2,2),intersection(2,2),intersection(2,2),intersection(2,2),intersection(2,2),intersection(2,2),intersection(2,2),intersection(2,2),intersection(2,2),intersection(2,2),intersection(0,0),intersection(2,2)]], 
@@ -87,17 +92,17 @@ West = [
     ['W Fairview Ave', ['2','1','2','0','0','0','0','0','0','0','0','0','0']],
     ['W Waverly Pl', ['0','0','2','1','1','0','1','0','0','1','1','0','2']],
     ['W Cleveland Ave', ['2','1','1','1','1','0','1','1','1','1','2','0','0']],
-    ['W Grace Ave', 
-    ['W Buckeye Ave', 
-    ['W Chelan Ave', 
-    ['W York Ave', 
-    ['W Jackson Ave', 
-    ['W Carlisle Ave', 
-    ['W Montgomery Ave', 
-    ['W Mansfield Ave', 
-    ['W Knox Ave', 
-    ['W Shannon Ave', 
-    ['W Indiana Ave'
+     ['W Grace Ave', []],
+    ['W Buckeye Ave', []],
+    ['W Chelan Ave', []],
+    ['W York Ave', []],
+    ['W Jackson Ave', []],
+    ['W Carlisle Ave', []],
+    ['W Montgomery Ave', []],
+    ['W Mansfield Ave', []],
+    ['W Knox Ave', []],
+    ['W Shannon Ave', []],
+    ['W Indiana Ave',[]]]
 
 LRAddresses = []*4
 
