@@ -36,19 +36,7 @@ NorthE =['N Stuart St', 'N Ruby St', 'N Mayfair St', 'N Colton St' 'N Lidgerwood
 # All East/West streets east of Division street
 EastN = ['E Francist', 'E Decatur Ave', 'E Dalke Ave','E Bismark Ave', 'E Central Ave', 'E Columbia Ave', 'E Joseph Ave', 'E Nebraska Ave', 'E Rowan Ave', 'E North Ave', 'E North-Sanson Alley', 'E Sanson Ave', 'E Everett Ave','E Diamond Ave', 'E Crown Ave', 'E Queen Ave', 'E Olympic Ave', 'E Wabash Ave', 'E Broad Ave', 'E Wellesley Ave', 'E Hoffman Ave', 'E Princeton Ave', 'E Heroy Ave', 'E Longfellow Ave', 'E Rich Ave', 'E Rockwell Ave', 'E Lacrosse Ave', 'E Ostrander Ave', 'E Walton Ave', 'E Garland Ave', 'E Empire Ave', 'E Providence Ave', 'E Kiernan Ave', 'E Gordan Ave', 'E Glass Ave', 'E Garnet Ave', 'E Courtland Ave', 'E Bridgeport Ave', 'Liberty Ave', 'E Dalton Ave', 'E Euclid Ave', 'E Fairview Ave', 'E Cora Ave', 'E Cleveland Ave', 'E North Foothills Dr', 'E Grace Ave', 'E Buckeye Ave', 'E Marietta Ave', 'E Avon Pl', 'E Jackson Ave', 'E Charlisle Ave', 'E Montgomery Ave', 'E Illinois Ave', 'E Ermina Ave', 'E Baldwin Ave', 'E Indiana Ave']
 
-######################################
-# 0 - street does not exist in current location
-# 2 - Starting or stoping point of road
-# 1 - Connection exists
-###################################### 
-East = ['E Francis Ave'
-['E Francis Ave', ['0','']],
-['E Dalke Ave', ['1',]],
-['E Bismark Ave', ['X']],
-['E Bismark Ave', ['0']],
-['E Bismark Ave', ['0']],
-['E Bismark Ave', ['X']],
-['E Central Ave', ['1']]]
+################### LIST OF WEST STREETS ###################
 
 # All North/South streets west of Division street
 NorthW = ['N Monroe St', 'N Lincoln St', 'N Post St', 'N Wall St', 'N Howard St', 'N Stevens St', 'N Washington St', 'N Whitehouse St', 'N Calispel St', 'N Normandie St', 'N Atlantic St', 'N Atlantic Dr', 'N Division St' ]
@@ -95,17 +83,17 @@ West = [
     ['W Fairview Ave', ['2','1','2','0','0','0','0','0','0','0','0','0','0']],
     ['W Waverly Pl', ['0','0','2','1','1','0','1','0','0','1','1','0','2']],
     ['W Cleveland Ave', ['2','1','1','1','1','0','1','1','1','1','2','0','0']],
-    ['W Grace Ave', 
-    ['W Buckeye Ave', 
-    ['W Chelan Ave', 
-    ['W York Ave', 
-    ['W Jackson Ave', 
-    ['W Carlisle Ave', 
-    ['W Montgomery Ave', 
-    ['W Mansfield Ave', 
-    ['W Knox Ave', 
-    ['W Shannon Ave', 
-    ['W Indiana Ave'
+     ['W Grace Ave', []],
+    ['W Buckeye Ave', []],
+    ['W Chelan Ave', []],
+    ['W York Ave', []],
+    ['W Jackson Ave', []],
+    ['W Carlisle Ave', []],
+    ['W Montgomery Ave', []],
+    ['W Mansfield Ave', []],
+    ['W Knox Ave', []],
+    ['W Shannon Ave', []],
+    ['W Indiana Ave',[]]]
 
 LRAddresses = []*4
 
