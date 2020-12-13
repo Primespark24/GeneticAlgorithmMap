@@ -2,7 +2,7 @@ import googlemaps
 from datetime import datetime
 from googlemaps import Client
 gmaps = Client(key='AIzaSyCFcf_BmN1Qm1q-a3yy07RXtPHMgOiyZ-w')
-""""
+
 ################### FUNCTIONS ###################
 def PathGenerator(Sequence, Addresses, Location = [1,1,2]):
     #UNSURE HOW TO HANDLE LOCATION
@@ -14,9 +14,12 @@ def PathGenerator(Sequence, Addresses, Location = [1,1,2]):
 
 
 class intersection:
-    def __init__(self, North, South, West, East,):
-        self.leftRight = leftRight
-        self.upDown = upDown
+    def __init__(self, North, South, East, West):
+        self.North = North
+        self.South = South
+        self.East = East
+        self.West = West
+
     def __repr__(self):
         return "Left to right intersection:% s Up to down Intersection:% s" % (self.leftRight, self.leftRight)
 
@@ -26,7 +29,7 @@ class intersection:
 
 ################### ADDRESSES OF EAST STREETS ###################
 NorthE =['N Stuart St', 'N Ruby St', 'N Mayfair St', 'N Colton St' 'N Lidgerwood St', 'N Astor St' 'N Addison St', 'N Wiscomb St' 'N Standard St', 'N Dakota St' 'N Cincinnati St', 'N Hamilton St', 'N Nevada St', 'N Columbus St', 'N Morton St', 'N Denver St', 'N Perry St', 'N Hogan St', 'N Helena St', 'N Madelia St', 'N Pittsburg St', 'N Magnolia St', 'N Napa St', 'N Martin St', 'N Crestline St', 'N Lee St', 'N Stone St', 'N Altamont St', 'N Cook St', 'N Smith St', 'N Lacey St', 'N Nelson St', 'N Regal St', 'N Haven St', 'N Market St']
-EastN = ['E Francist']
+EastN = ['E Francist', 'E Decatur Ave', ]
 
 ######################################
 # 0 - street does not exist in current location
@@ -99,22 +102,20 @@ West = [
     ['W Shannon Ave', 
     ['W Indiana Ave'
 
-LRAddresses = []*
+LRAddresses = []*4
+
 """
-
-
 # Geocoding an address
 geocode_result = gmaps.geocode('1600 Amphitheatre Parkway, Mountain View, CA')
 
 # Look up an address with reverse geocoding
 reverse_geocode_result = gmaps.reverse_geocode((40.714224, -73.961452))
 for i in range(200):
-    now = datetime.now()
-    directions = gmaps.directions(origin="6220 North Division, Spokane, WA",
-                                        destination="5313 East Frederick, Spokane, WA")
+     gmaps.directions('6220 North Division, Spokane, WA', '5313 East Frederick, Spokane, WA')
+    
+#gmaps.distance_matrix('6220 North Division, Spokane, WA','5313 East Frederick, Spokane, WA')
 print("done")
 
-"""
 directions = directions[0]
 i=1
 for leg in directions['legs']:
