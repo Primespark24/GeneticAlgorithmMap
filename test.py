@@ -18,14 +18,15 @@ def PathGenerator(Sequence, Addresses, Location = [1,1,2]):
 #              if that direction is available to the bot, false otherwise
 # _repr_ : Printing the details of the intersection
 class intersection:
-    def __init__(self, North, South, East, West):
+    def __init__(self, North, South, East, West, DoesExist):
         self.North = North
         self.South = South
         self.East = East
         self.West = West
+        self.DoesExist = DoesExist
 
     def __repr__(self):
-        return "North:% s South:% s East:% s West:% s" % (self.North, self.South, self.East, self.West)
+        return "North:% s South:% s East:% s West:% s DoesExist:% s" % (self.North, self.South, self.East, self.West, self.DoesExist)
 
 
 ################### MAIN CODE ###################
@@ -34,12 +35,68 @@ class intersection:
 
 ################### LIST OF EAST STREETS ###################
 # All North/South streets east of Division street
-NorthE = ['N Stuart St', 'N Ruby St', 'N Mayfair St', 'N Colton St' 'N Lidgerwood St', 'N Astor St' 'N Addison St', 'N Wiscomb St' 'N Standard St', 'N Dakota St' 'N Cincinnati St', 'N Hamilton St', 'N Nevada St', 'N Columbus St', 'N Morton St', 'N Denver St', 'N Perry St', 'N Hogan St', 'N Helena St', 'N Madelia St', 'N Pittsburg St', 'N Magnolia St', 'N Napa St', 'N Martin St', 'N Crestline St', 'N Lee St', 'N Stone St', 'N Altamont St', 'N Cook St', 'N Smith St', 'N Lacey St', 'N Nelson St', 'N Regal St', 'N Haven St', 'N Market St']
+NorthE = ['N Division St', 'N Stuart St', 'N Ruby St', 'N Mayfair St', 'N Colton St', 'N Lidgerwood St', 'N Astor St', 'N Addison St', 'N Wiscomb St', 'N Standard St', 'N Dakota St', 'N Cincinnati St', 'N Hamilton St', 'N Nevada St', 'N Columbus St', 'N Morton St', 'N Denver St', 'N Perry St', 'N Hogan St', 'N Helena St', 'N Madelia St', 'N Pittsburg St', 'N Magnolia St', 'N Napa St', 'N Martin St', 'N Crestline St', 'N Lee St', 'N Stone St', 'N Altamont St', 'N Cook St', 'N Smith St', 'N Lacey St', 'N Nelson St', 'N Regal St', 'N Haven St', 'N Market St']
 # All East/West streets east of Division street
 EastN = ['E Francist', 'E Decatur Ave', 'E Dalke Ave','E Bismark Ave', 'E Central Ave', 'E Columbia Ave', 'E Joseph Ave', 'E Nebraska Ave', 'E Rowan Ave', 'E North Ave', 'E North-Sanson Alley', 'E Sanson Ave', 'E Everett Ave','E Diamond Ave', 'E Crown Ave', 'E Queen Ave', 'E Olympic Ave', 'E Wabash Ave', 'E Broad Ave', 'E Wellesley Ave', 'E Hoffman Ave', 'E Princeton Ave', 'E Heroy Ave', 'E Longfellow Ave', 'E Rich Ave', 'E Rockwell Ave', 'E Lacrosse Ave', 'E Ostrander Ave', 'E Walton Ave', 'E Garland Ave', 'E Empire Ave', 'E Providence Ave', 'E Kiernan Ave', 'E Gordan Ave', 'E Glass Ave', 'E Garnet Ave', 'E Courtland Ave', 'E Bridgeport Ave', 'Liberty Ave', 'E Dalton Ave', 'E Euclid Ave', 'E Fairview Ave', 'E Cora Ave', 'E Cleveland Ave', 'E North Foothills Dr', 'E Grace Ave', 'E Buckeye Ave', 'E Marietta Ave', 'E Avon Pl', 'E Jackson Ave', 'E Charlisle Ave', 'E Montgomery Ave', 'E Illinois Ave', 'E Ermina Ave', 'E Baldwin Ave', 'E Indiana Ave']
 
 # East Addresses
-EastN = ['E Francist', 'E Decatur Ave', 'E Dalke Ave', 'E Bismark Ave', 'E Central Ave', 'E Columbia Ave', 'E Joseph Ave', 'E Nebraska Ave', 'E Rowan Ave', 'E North Ave', 'E North-Sanson Alley', 'E Sanson Ave', 'E Everett Ave','E Diamond Ave', 'E Crown Ave', 'E Queen Ave', 'E Olympic Ave', 'E Wabash Ave', 'E Broad Ave', 'E Wellesley Ave', 'E Hoffman Ave', 'E Princeton Ave', 'E Heroy Ave', 'E Longfellow Ave', 'E Rich Ave', 'E Rockwell Ave', 'E Lacrosse Ave', 'E Ostrander Ave', 'E Walton Ave', 'E Garland Ave', 'E Empire Ave', 'E Providence Ave', 'E Kiernan Ave', 'E Gordan Ave', 'E Glass Ave', 'E Garnet Ave', 'E Courtland Ave', 'E Bridgeport Ave', 'Liberty Ave', 'E Dalton Ave', 'E Euclid Ave', 'E Fairview Ave', 'E Cora Ave', 'E Cleveland Ave', 'E North Foothills Dr', 'E Grace Ave', 'E Buckeye Ave', 'E Marietta Ave', 'E Avon Pl', 'E Jackson Ave', 'E Charlisle Ave', 'E Montgomery Ave', 'E Illinois Ave', 'E Ermina Ave', 'E Baldwin Ave', 'E Indiana Ave']
+East = [
+['E Francist', [intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection()]
+['E Decatur Ave', 
+'E Dalke Ave', 
+'E Bismark Ave', 
+'E Central Ave', 
+'E Columbia Ave', 
+'E Joseph Ave', 
+'E Nebraska Ave', 
+'E Rowan Ave', 
+'E North Ave', 
+'E North-Sanson Alley', 
+'E Sanson Ave', 
+'E Everett Ave',
+'E Diamond Ave', 
+'E Crown Ave',
+'E Queen Ave',
+'E Olympic Ave',
+'E Wabash Ave',
+'E Broad Ave',
+'E Wellesley Ave',
+'E Hoffman Ave',
+'E Princeton Ave', 
+'E Heroy Ave', 
+'E Longfellow Ave', 
+'E Rich Ave', 
+'E Rockwell Ave', 
+'E Lacrosse Ave', 
+'E Ostrander Ave', 
+'E Walton Ave', 
+'E Garland Ave', 
+'E Empire Ave', 
+'E Providence Ave', 
+'E Kiernan Ave', 
+'E Gordan Ave', 
+'E Glass Ave', 
+'E Garnet Ave', 
+'E Courtland Ave', 
+'E Bridgeport Ave', 
+'Liberty Ave', 
+'E Dalton Ave', 
+'E Euclid Ave', 
+'E Fairview Ave', 
+'E Cora Ave', 
+'E Cleveland Ave', 
+'E North Foothills Dr', 
+'E Grace Ave', 
+'E Buckeye Ave', 
+'E Marietta Ave', 
+'E Avon Pl', 
+'E Jackson Ave', 
+'E Charlisle Ave', 
+'E Montgomery Ave', 
+'E Illinois Ave', 
+'E Ermina Ave', 
+'E Baldwin Ave', 
+'E Indiana Ave']
 
 ######################################
 # 0 - street does not exist in current location
