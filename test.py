@@ -1,9 +1,17 @@
+# Brycen Martin, Jonathan Laughlin and Shane Snediker
+# Dr. Jones CS473
+# Genetic Algorithm Final Project
+# Updated December 13, 2020
+
+# Access Google's Spokane City Map API
 import googlemaps 
 from datetime import datetime
 from googlemaps import Client
 gmaps = Client(key='AIzaSyCFcf_BmN1Qm1q-a3yy07RXtPHMgOiyZ-w')
 
 ################### CLASSES AND FUNCTIONS ###################
+
+# TODO: This function needs work
 
 def PathGenerator(Sequence, Addresses, Location = [1,1,2]):
     #UNSURE HOW TO HANDLE LOCATION
@@ -13,9 +21,13 @@ def PathGenerator(Sequence, Addresses, Location = [1,1,2]):
             Path.append(Addresses[0])
     return Path
 
-# A class for representing intersections
-# Constructor: takes 4 Boolean arguments (North, South, East, West). True
-#              if that direction is available to the bot, false otherwise
+# A class for representing the intersections of our mini city
+# Constructor: takes 5 Boolean arguments (North, South, East, West, DoesExist). For N, S, E, & W
+#              the Boolean value signifies if the bot is able to traverse in that direction from
+#              this intersection.  DoesExist is a Boolean value that signfies whether or not the
+#              street exists at this intersection.  This is necessary because there are certain
+#              areas of our mini city where specific streets do not exist and we need a way of 
+#              communicating that information to our bot.  
 # _repr_ : Printing the details of the intersection
 class intersection:
     def __init__(self, North, South, East, West, DoesExist):
@@ -31,16 +43,17 @@ class intersection:
 
 ################### MAIN CODE ###################
 
-################### LIST OF EAST STREETS ###################
+
+################### LIST OF EAST STREETS ########################################################
 
 # All North/South streets east of Division street
 NorthE = ['N Division St', 'N Stuart St', 'N Ruby St', 'N Mayfair St', 'N Colton St', 'N Lidgerwood St', 'N Astor St', 'N Addison St', 'N Wiscomb St', 'N Standard St', 'N Dakota St', 'N Cincinnati St', 'N Hamilton St', 'N Nevada St', 'N Columbus St', 'N Morton St', 'N Denver St', 'N Perry St', 'N Hogan St', 'N Helena St', 'N Madelia St', 'N Pittsburg St', 'N Magnolia St', 'N Napa St', 'N Martin St', 'N Crestline St', 'N Lee St', 'N Stone St', 'N Altamont St', 'N Cook St', 'N Smith St', 'N Lacey St', 'N Nelson St', 'N Regal St', 'N Haven St', 'N Market St']
 # All East/West streets east of Division street
-EastW = ['E Francist', 'E Decatur Ave', 'E Dalke Ave','E Bismark Ave', 'E Central Ave', 'E Columbia Ave', 'E Joseph Ave', 'E Nebraska Ave', 'E Rowan Ave', 'E North Ave', 'E North-Sanson Alley', 'E Sanson Ave', 'E Everett Ave','E Diamond Ave', 'E Crown Ave', 'E Queen Ave', 'E Olympic Ave', 'E Wabash Ave', 'E Broad Ave', 'E Wellesley Ave', 'E Hoffman Ave', 'E Princeton Ave', 'E Heroy Ave', 'E Longfellow Ave', 'E Rich Ave', 'E Rockwell Ave', 'E Lacrosse Ave', 'E Ostrander Ave', 'E Walton Ave', 'E Garland Ave', 'E Empire Ave', 'E Providence Ave', 'E Kiernan Ave', 'E Gordan Ave', 'E Glass Ave', 'E Garnet Ave', 'E Courtland Ave', 'E Bridgeport Ave', 'Liberty Ave', 'E Dalton Ave', 'E Euclid Ave', 'E Fairview Ave', 'E Cora Ave', 'E Cleveland Ave', 'E North Foothills Dr', 'E Grace Ave', 'E Buckeye Ave', 'E Marietta Ave', 'E Avon Pl', 'E Jackson Ave', 'E Charlisle Ave', 'E Montgomery Ave', 'E Illinois Ave', 'E Ermina Ave', 'E Baldwin Ave', 'E Indiana Ave']
+EastW = ['E Francis', 'E Decatur Ave', 'E Dalke Ave','E Bismark Ave', 'E Central Ave', 'E Columbia Ave', 'E Joseph Ave', 'E Nebraska Ave', 'E Rowan Ave', 'E North Ave', 'E North-Sanson Alley', 'E Sanson Ave', 'E Everett Ave','E Diamond Ave', 'E Crown Ave', 'E Queen Ave', 'E Olympic Ave', 'E Wabash Ave', 'E Broad Ave', 'E Wellesley Ave', 'E Hoffman Ave', 'E Princeton Ave', 'E Heroy Ave', 'E Longfellow Ave', 'E Rich Ave', 'E Rockwell Ave', 'E Lacrosse Ave', 'E Ostrander Ave', 'E Walton Ave', 'E Garland Ave', 'E Empire Ave', 'E Providence Ave', 'E Kiernan Ave', 'E Gordan Ave', 'E Glass Ave', 'E Garnet Ave', 'E Courtland Ave', 'E Bridgeport Ave', 'Liberty Ave', 'E Dalton Ave', 'E Euclid Ave', 'E Fairview Ave', 'E Cora Ave', 'E Cleveland Ave', 'E North Foothills Dr', 'E Grace Ave', 'E Buckeye Ave', 'E Marietta Ave', 'E Avon Pl', 'E Jackson Ave', 'E Charlisle Ave', 'E Montgomery Ave', 'E Illinois Ave', 'E Ermina Ave', 'E Baldwin Ave', 'E Indiana Ave']
 
-# East Addresses
-
+# A copy of the NorthE array spaced out so that it helps us hard code intersections from our EAST map
 NorthE = [                        'N Division St',                                  'N Stuart St',                               'N Ruby St',                               'N Mayfair St'       ,                  'N Colton St',                                'N Lidgerwood St',                             'N Astor St',                                   'N Addison St',                             'N Wiscomb St',                            'N Standard St',                               'N Dakota St',                            'N Cincinnati St',                           'N Hamilton St',                             'N Nevada St',                            'N Columbus St',                     'N Morton St',                                 'N Denver St',                                  'N Perry St',                            'N Hogan St',                             'N Helena St',                              'N Madelia St',                        'N Pittsburg St',                           'N Magnolia St',                        'N Napa St',                          'N Martin St',                                'N Crestline St',                             'N Lee St',                        'N Stone St',                                       'N Altamont St',                             'N Cook St',                                'N Smith St',                                'N Lacey St',                                     'N Nelson St',                       'N Regal St',                                'N Haven St',                                'N Market St']
+################## INTERSECTION INFO FOR EASTSIDE STREETS #######################################
 East = [
 ['E Francis', [          intersection(False,False,True,True,True),    intersection(False,False,False,False,False), intersection(False,False,False,False,False), intersection(False,True,True,True,True),     intersection(False,True,True,True,True),     intersection(False,True,True,True,True),     intersection(False,True,True,True,True),     intersection(False,True,True,True,True),     intersection(False,True,True,True,True),     intersection(False,True,True,True,True), intersection(False,False,False,False,False), intersection(False,True,True,True,True),     intersection(False,False,False,False,False), intersection(False,True,True,True,True), intersection(False,False,False,False,False), intersection(False,True,True,True,True), intersection(False,False,False,False,False), intersection(False,True,True,True,True), intersection(False,False,False,False,False), intersection(False,True,True,True,True), intersection(False,False,False,False,False), intersection(False,True,True,True,True), intersection(False,False,False,False,False), intersection(False,True,True,True,True), intersection(False,False,False,False,False), intersection(False,True,True,True,True), intersection(False,False,False,False,False), intersection(False,True,True,True,True), intersection(False,False,False,False,False), intersection(False,True,True,True,True), intersection(False,True,True,True,True),     intersection(False,True,True,True,True),     intersection(False,False,False,False,False), intersection(False,True,True,True,True),     intersection(False,True,True,True,True),     intersection(False,True,False,True,True)],
 'E Decatur Ave', [       intersection(False,False,False,False,False), intersection(False,False,False,False,False), intersection(False,False,False,False,False), intersection(False,False,False,False,False), intersection(False,False,False,False,False), intersection(False,False,False,False,False), intersection(False,False,False,False,False), intersection(False,False,False,False,False), intersection(False,False,False,False,False), intersection(True,True,True,False,True), intersection(False,False,False,False,False), intersection(True,True,True,True,True),      intersection(False,False,False,False,False), intersection(True,True,True,True,True),  intersection(False,False,False,False,False), intersection(True,True,True,True,True),  intersection(False,False,False,False,False), intersection(True,True,True,True,True),  intersection(False,False,False,False,False), intersection(True,True,True,True,True),  intersection(False,False,False,False,False), intersection(True,True,True,True,True),  intersection(False,False,False,False,False), intersection(True,True,True,True,True),  intersection(False,False,False,False,False), intersection(True,True,True,True,True),  intersection(False,False,False,False,False), intersection(True,True,True,True,True),  intersection(False,False,False,False,False), intersection(True,True,False,True,True), intersection(False,False,False,False,False), intersection(False,False,False,False,False), intersection(False,False,False,False,False), intersection(True,True,True,False,True),     intersection(True,False,True,True,True),     intersection(True,True,False,True,True)],
@@ -97,65 +110,63 @@ East = [
 'E Illinois Ave', [      intersection(False,False,False,False,False), intersection(False,False,False,False,False), intersection(False,False,False,False,False), intersection(), intersection(False,False,False,False,False), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection()],
 'E Ermina Ave', [        intersection(False,True,True,False,True),    intersection(False,False,False,False,False), intersection(True,False,True,True,True),     intersection(), intersection(False,False,False,False,False), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection()],
 'E Baldwin Ave', [       intersection(False,True,True,False,True),    intersection(False,False,False,False,False), intersection(True,False,True,True,True),     intersection(), intersection(False,False,False,False,False), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection()],
-'E Indiana Ave'[         intersection(False,True,True,True,True),     intersection(False,False,False,False,False), intersection(True,False,True,True,True),     intersection(), intersection(False,False,False,False,False), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection()]]
+'E Indiana Ave'[         intersection(False,True,True,True,True),     intersection(False,False,False,False,False), intersection(True,False,True,True,True),     intersection(), intersection(False,False,False,False,False), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection()]]]
 
-######################################
-# 0 - street does not exist in current location
-# 2 - Starting or stoping point of road
-# 1 - Connection exists
-###################################### 
+#################### LIST OF WEST STREETS #########################################################
 
 # All North/South streets west of Division street
 NorthW = ['N Monroe St', 'N Lincoln St', 'N Post St', 'N Wall St', 'N Howard St', 'N Stevens St', 'N Washington St', 'N Whitehouse St', 'N Calispel St', 'N Normandie St', 'N Atlantic St', 'N Division St']
 # All East/West streets west of Division street
 WestE = ['W Francis Ave', 'W Dalke Ave', 'W Central Ave', 'W Columbia Ave', 'W Franklin Ct', 'W Joseph Ave', 'W Nebraska Ave', 'W Rowan Ave', 'W Everett Ave', 'W Queen Ave', 'W Wabash Ave', 'W Wellesley Ave', 'W Amherst Ct', 'W Sussex Ct', 'W Princeton Ave', 'W Heroy Ave', 'W Longfellow Ave', 'W Rockwell Ave', 'W Lacrosse Ave', 'W Walton Ave', 'W Garland Ave', 'W Providence Ave', 'W Kiernan Ave', 'W Gordon Ave', 'W Glass-Gordon Alley', 'W Glass Ave', 'W Courtland Ave', 'W Gray Ct', 'W Cora Ave', 'W Alice Ave', 'W Dalton Ave', 'W Euclid Ave', 'W Frederick Ave', 'W Park Pl', 'W Fairview Ave', 'W Waverly Pl', 'W Cleveland Ave', 'W Grace Ave', 'W Buckeye Ave', 'W Chelan Ave', 'W York Ave', 'W Jackson Ave', 'W Carlisle Ave', 'W Montgomery Ave', 'W Mansfield Ave', 'W Knox Ave', 'W Shannon Ave', 'W Indiana Ave']
 
-################## INTERSECTION INFO FOR WESTSIDE STREETS #####################
+# A copy of the NorthW array spaced out so that it helps us hard code intersections from our WEST map
+NorthW = [                        'N Monroe St',                               'N Lincoln St',                                'N Post St',                               'N Wall St',                                'N Howard St',                                   'N Stevens St',                              'N Washington St',                        'N Whitehouse St',                           'N Calispel St',                          'N Normandie St',                           'N Atlantic St',                                 'N Division St']
+################## INTERSECTION INFO FOR WESTSIDE STREETS #######################################
 West = [
-    ['W Francis Ave', [intersection(2,2),intersection(2,2),intersection(2,2),intersection(2,2),intersection(2,2),intersection(2,2),intersection(2,2),intersection(2,2),intersection(2,2),intersection(2,2),intersection(2,2),intersection(0,0),intersection(2,2)]], 
-    ['W Dalke Ave', ['2','1','1','1','1','1','1','1','1','1','1','0','2']],
-    ['W Central Ave', ['2','1','1','1','1','1','1','1','1','1','1','0','2']], 
-    ['W Columbia Ave', ['2','1','1','1','2','1','1','1','1','1','1','0','2']], 
-    ['W Joesph Ave', ['2','1','1','1','1','1','1','1','1','1','1','0','2']],
-    ['W Nebraska Ave', ['2','1','1','1','1','1','1','1','1','1','1','0','2']],
-    ['W Rowan Ave', ['2','1','1','1','1','1','1','2','0','0','0','0','0']],
-    ['W Everett Ave', ['2','1','1','1','1','1','1','2','0','0','0','0','0']],
-    ['W Queen Ave', ['2','1','1','1','1','1','1','1','1','1','1','0','2']],
-    ['W Wabash Ave', ['2','1','1','1','1','1','1','1','1','1','1','0','2']],
-    ['W Wellesley Ave', ['2','1','1','1','1','1','1','1','1','1','0','1','2']],
-    ['W Princeton Ave', ['2','1','1','1','1','1','1','2','0','0','0','0','0']],
-    ['W Heroy Ave', ['2','1','1','1','1','1','1','1','0','0','0','2','0']],
-    ['W Longfellow Ave', ['2','1','1','1','1','1','1','1','1','1','0','1','2']],
-    ['W Rockwell Ave', ['2','1','1','1','1','1','1','1','1','1','0','1','2']],
-    ['W Lacrosse Ave', ['2','1','1','1','1','1','1','1','1','1','0','1','2']],
-    ['W Walton Ave', ['2','1','1','1','1','1','1','1','1','2','0','0','0']],
-    ['W Garland Ave', ['2','1','1','1','1','1','1','1','1','1','1','0','2']],
-    ['W Providence Ave', ['2','0','1','1','1','0','1','0','1','1','1','0','2']],
-    ['W Kiernan Ave', ['2','0','1','0','1','0','2','0','0','0','0','0','0']],
-    ['W Gordon Ave', ['2','0','1','0','1','0','1','0','1','1','1','0','2']],
-    ['W Glass Ave', ['2','0','1','0','1','0','1','0','1','1','1','0','2']],
-    ['W Courtland Ave', ['0','0','0','0','0','0','0','0','0','1','1','0','2']],
-    ['W Gray Ct',  ['0','0','0','0','0','0','0','0','0','1','1','0','2']],
-    ['W Cora Ave',  ['2','1','1','0','1','1','1','0','1','1','1','0','2']],
-    ['W Alice Ave',  ['2','1','1','0','1','1','1','0','0','0','0','0','2']],
-    ['W Dalton Ave',  ['2','1','1','1','1','1','1','0','1','1','0','0','2']],
-    ['W Euclid Ave',  ['2','1','1','1','1','1','1','0','1','1','1','0','2']],
-    ['W Frederick Ave',  ['2','1','1','1','1','1','1','0','1','1','2','0','0']],
-    ['W Park Pl',  ['0','0','2','1','0','1','0','0','1','1','2','0','0']],
-    ['W Fairview Ave', ['2','1','2','0','0','0','0','0','0','0','0','0','0']],
-    ['W Waverly Pl', ['0','0','2','1','1','0','1','0','0','1','1','0','2']],
-    ['W Cleveland Ave', ['2','1','1','1','1','0','1','1','1','1','2','0','0']],
-    ['W Grace Ave', []],
-    ['W Buckeye Ave', []],
-    ['W Chelan Ave', []],
-    ['W York Ave', []],
-    ['W Jackson Ave', []],
-    ['W Carlisle Ave', []],
-    ['W Montgomery Ave', []],
-    ['W Mansfield Ave', []],
-    ['W Knox Ave', []],
-    ['W Shannon Ave', []],
-    ['W Indiana Ave',[]]]
+    ['W Francis Ave', [intersection(False, True, True, False, True), intersection(False, True, True, True, True), intersection(False, True, True, True, True), intersection(False, True, True, True, True), intersection(False, True, True, True, True), intersection(False, True, True, True, True), intersection(False, True, True, True, True), intersection(False, True, True, True, True), intersection(False, True, True, True, True), intersection(False, True, True, True, True), intersection(False, True, True, True, True), intersection(False, True, True, True, True)]], 
+    ['W Dalke Ave', [intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , )]],
+    ['W Central Ave', [intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , )]], 
+    ['W Columbia Ave', [intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , )]], 
+    ['W Joesph Ave', [intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , )]],
+    ['W Nebraska Ave', [intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , )]],
+    ['W Rowan Ave', [intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , )]],
+    ['W Everett Ave', [intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , )]],
+    ['W Queen Ave', [intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , )]],
+    ['W Wabash Ave', [intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , )]],
+    ['W Wellesley Ave', [intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , )]],
+    ['W Princeton Ave', [intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , )]],
+    ['W Heroy Ave', [intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , )]],
+    ['W Longfellow Ave', [intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , )]],
+    ['W Rockwell Ave', [intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , )]],
+    ['W Lacrosse Ave', [intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , )]],
+    ['W Walton Ave', [intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , )]],
+    ['W Garland Ave', [intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , )]],
+    ['W Providence Ave', [intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , )]],
+    ['W Kiernan Ave', [intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , )]],
+    ['W Gordon Ave', [intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , )]],
+    ['W Glass Ave', [intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , )]],
+    ['W Courtland Ave', [intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , )]],
+    ['W Gray Ct',  [intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , )]],
+    ['W Cora Ave',  [intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , )]],
+    ['W Alice Ave',  [intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , )]],
+    ['W Dalton Ave',  [intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , )]],
+    ['W Euclid Ave',  [intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , )]],
+    ['W Frederick Ave',  [intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , )]],
+    ['W Park Pl',  [intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , )]],
+    ['W Fairview Ave', [intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , )]],
+    ['W Waverly Pl', [intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , )]],
+    ['W Cleveland Ave', [intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , )]],
+    ['W Grace Ave', [intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , )]],
+    ['W Buckeye Ave', [intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , )]],
+    ['W Chelan Ave', [intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , )]],
+    ['W York Ave', [intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , )]],
+    ['W Jackson Ave', [intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , )]],
+    ['W Carlisle Ave', [intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , )]],
+    ['W Montgomery Ave', [intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , )]],
+    ['W Mansfield Ave', [intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , )]],
+    ['W Knox Ave', [intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , )]],
+    ['W Shannon Ave', [intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , )]],
+    ['W Indiana Ave',[intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , ), intersection(, , , , )]]]
 
 """
 # Geocoding an address
