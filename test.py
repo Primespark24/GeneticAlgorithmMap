@@ -40,7 +40,7 @@ EastW = ['E Francist', 'E Decatur Ave', 'E Dalke Ave','E Bismark Ave', 'E Centra
 
 # East Addresses
 East = [
-['E Francist', [intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection()]
+['E Francist', [intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection(), intersection()]],
 ['E Decatur Ave', 
 'E Dalke Ave', 
 'E Bismark Ave', 
@@ -95,7 +95,7 @@ East = [
 'E Illinois Ave', 
 'E Ermina Ave', 
 'E Baldwin Ave', 
-'E Indiana Ave']
+'E Indiana Ave']]
 
 ######################################
 # 0 - street does not exist in current location
@@ -104,9 +104,9 @@ East = [
 ###################################### 
 
 # All North/South streets west of Division street
-NorthW = ['N Monroe St', 'N Lincoln St', 'N Post St', 'N Wall St', 'N Howard St', 'N Stevens St', 'N Washington St', 'N Whitehouse St', 'N Calispel St', 'N Normandie St', 'N Atlantic St', 'N Division St' ]
+NorthW = ['N Monroe St', 'N Lincoln St', 'N Post St', 'N Wall St', 'N Howard St', 'N Stevens St', 'N Washington St', 'N Whitehouse St', 'N Calispel St', 'N Normandie St', 'N Atlantic St', 'N Division St']
 # All East/West streets west of Division street
-WestE = []
+WestE = ['W Francis Ave', 'W Dalke Ave', 'W Central Ave', 'W Columbia Ave', 'W Franklin Ct', 'W Joseph Ave', 'W Nebraska Ave', 'W Rowan Ave', 'W Everett Ave', 'W Queen Ave', 'W Wabash Ave', 'W Wellesley Ave', 'W Amherst Ct', 'W Sussex Ct', 'W Princeton Ave', 'W Heroy Ave', 'W Longfellow Ave', 'W Rockwell Ave', 'W Lacrosse Ave', 'W Walton Ave', 'W Garland Ave', 'W Providence Ave', 'W Kiernan Ave', 'W Gordon Ave', 'W Glass-Gordon Alley', 'W Glass Ave', 'W Courtland Ave', 'W Gray Ct', 'W Cora Ave', 'W Alice Ave', 'W Dalton Ave', 'W Euclid Ave', 'W Frederick Ave', 'W Park Pl', 'W Fairview Ave', 'W Waverly Pl', 'W Cleveland Ave', 'W Grace Ave', 'W Buckeye Ave', 'W Chelan Ave', 'W York Ave', 'W Jackson Ave', 'W Carlisle Ave', 'W Montgomery Ave', 'W Mansfield Ave', 'W Knox Ave', 'W Shannon Ave', 'W Indiana Ave'']
 
 ################## INTERSECTION INFO FOR WESTSIDE STREETS #####################
 West = [
@@ -114,7 +114,6 @@ West = [
     ['W Dalke Ave', ['2','1','1','1','1','1','1','1','1','1','1','0','2']],
     ['W Central Ave', ['2','1','1','1','1','1','1','1','1','1','1','0','2']], 
     ['W Columbia Ave', ['2','1','1','1','2','1','1','1','1','1','1','0','2']], 
-    ['W Franklin Ct', ['0','0','0','0','0','0','0','0','2','0','2','0','0']],
     ['W Joesph Ave', ['2','1','1','1','1','1','1','1','1','1','1','0','2']],
     ['W Nebraska Ave', ['2','1','1','1','1','1','1','1','1','1','1','0','2']],
     ['W Rowan Ave', ['2','1','1','1','1','1','1','2','0','0','0','0','0']],
@@ -122,8 +121,6 @@ West = [
     ['W Queen Ave', ['2','1','1','1','1','1','1','1','1','1','1','0','2']],
     ['W Wabash Ave', ['2','1','1','1','1','1','1','1','1','1','1','0','2']],
     ['W Wellesley Ave', ['2','1','1','1','1','1','1','1','1','1','0','1','2']],
-    ['W Amherst Ct', ['0','0','0','0','0','0','0','0','1','0','0','1','0']],
-    ['W Sussex Ct', ['0','0','0','0','0','0','0','0','0','0','0','1','0']],
     ['W Princeton Ave', ['2','1','1','1','1','1','1','2','0','0','0','0','0']],
     ['W Heroy Ave', ['2','1','1','1','1','1','1','1','0','0','0','2','0']],
     ['W Longfellow Ave', ['2','1','1','1','1','1','1','1','1','1','0','1','2']],
@@ -134,7 +131,6 @@ West = [
     ['W Providence Ave', ['2','0','1','1','1','0','1','0','1','1','1','0','2']],
     ['W Kiernan Ave', ['2','0','1','0','1','0','2','0','0','0','0','0','0']],
     ['W Gordon Ave', ['2','0','1','0','1','0','1','0','1','1','1','0','2']],
-    ['W Glass-Gordon Alley', ['2','0','0','0','0','0','0','0','0','0','0','0','0']],
     ['W Glass Ave', ['2','0','1','0','1','0','1','0','1','1','1','0','2']],
     ['W Courtland Ave', ['0','0','0','0','0','0','0','0','0','1','1','0','2']],
     ['W Gray Ct',  ['0','0','0','0','0','0','0','0','0','1','1','0','2']],
@@ -158,8 +154,6 @@ West = [
     ['W Knox Ave', []],
     ['W Shannon Ave', []],
     ['W Indiana Ave',[]]]
-
-LRAddresses = []*4
 
 """
 # Geocoding an address
