@@ -23,8 +23,8 @@ class intersection:
     def __repr__(self):
         return "Left to right intersection:% s Up to down Intersection:% s" % (self.leftRight, self.leftRight)
 
-#dgfkljsfjdfkfjkj
 
+#gflkskjfsdksfjdfskd
 ################### MAIN CODE ###################
 
 ################### LIST OF EAST STREETS ###################
