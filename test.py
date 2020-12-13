@@ -45,16 +45,11 @@ East = ['E Francis Ave'
 ['E Bismark Ave', ['X']],
 ['E Central Ave', ['1']]]
 
-<<<<<<< HEAD
-################### ADDRESSES OF NORTH STREETS ###################
-NorthWestSide = ['N Monroe St', 'N Lincoln St', 'N Post St', 'N Wall St', 'N Howard St', 'N Stevens St', 'N Washington St', 'N Whitehouse St', 'N Calispel St', 'N Normandie St', 'N Atlantic St', 'N Atlantic Dr', 'N Division St' ]
-=======
 # All North/South streets west of Division street
 NorthW = ['N Monroe St', 'N Lincoln St', 'N Post St', 'N Wall St', 'N Howard St', 'N Stevens St', 'N Washington St', 'N Whitehouse St', 'N Calispel St', 'N Normandie St', 'N Atlantic St', 'N Atlantic Dr', 'N Division St' ]
 # All East/West streets west of Division streed
 West = []
 
->>>>>>> afe497cfff6159d2aaa9941986b89b23e764ea3d
 ################## ADDRESSES OF WEST STREETS #####################
 West = [
     #need to change all lines to follow the one below :(
