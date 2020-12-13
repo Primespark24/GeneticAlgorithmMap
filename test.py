@@ -3,7 +3,8 @@ from datetime import datetime
 from googlemaps import Client
 gmaps = Client(key='AIzaSyCFcf_BmN1Qm1q-a3yy07RXtPHMgOiyZ-w')
 
-################### FUNCTIONS ###################
+################### CLASSES AND FUNCTIONS ###################
+
 def PathGenerator(Sequence, Addresses, Location = [1,1,2]):
     #UNSURE HOW TO HANDLE LOCATION
     Path = []
@@ -12,7 +13,10 @@ def PathGenerator(Sequence, Addresses, Location = [1,1,2]):
             Path.append(Addresses[0])
     return Path
 
-
+# A class for representing intersections
+# Constructor: takes 4 Boolean arguments (North, South, East, West). True
+#              if that direction is available to the bot, false otherwise
+# _repr_ : Printing the details of the intersection
 class intersection:
     def __init__(self, North, South, East, West):
         self.North = North
@@ -22,6 +26,7 @@ class intersection:
 
     def __repr__(self):
         return "Left to right intersection:% s Up to down Intersection:% s" % (self.leftRight, self.leftRight)
+
 
 ################### MAIN CODE ###################
 
@@ -36,10 +41,10 @@ East = ['E Francis', 'E Decatur Ave', ]
 
 # All North/South streets west of Division street
 NorthW = ['N Monroe St', 'N Lincoln St', 'N Post St', 'N Wall St', 'N Howard St', 'N Stevens St', 'N Washington St', 'N Whitehouse St', 'N Calispel St', 'N Normandie St', 'N Atlantic St', 'N Atlantic Dr', 'N Division St' ]
-# All East/West streets west of Division streed
+# All East/West streets west of Division street
 West = []
 
-################## ADDRESSES OF WEST STREETS #####################
+################## INTERSECTION INFO FOR WESTSIDE STREETS #####################
 West = [
     ['W Francis Ave', [intersection(2,2),intersection(2,2),intersection(2,2),intersection(2,2),intersection(2,2),intersection(2,2),intersection(2,2),intersection(2,2),intersection(2,2),intersection(2,2),intersection(2,2),intersection(0,0),intersection(2,2)]], 
     ['W Dalke Ave', ['2','1','1','1','1','1','1','1','1','1','1','0','2']],
