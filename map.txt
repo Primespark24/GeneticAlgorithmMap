@@ -20,57 +20,58 @@ south direction is Decatur, Dalke, Bismark, etc.)
 MAP OF THE WEST SIDE OF OUR MINI CITY
 
 
-                     N Monroe St      N Lincoln St        N Post St        N Wall St       N Howard St        N Stevens St       N Washington St        N Whitehouse St        N Calispel St       N Normandie St        N Atlantic St       N Division St
-W Dalke Ave 
-W Central Ave 
-W Columbia Ave 
-W Joseph Ave 
-W Nebraska Ave 
-W Rowan Ave
-W Everett Ave 
-W Queen Ave 
-W Wabash Ave 
-W Wellesley Ave 
-W Princeton Ave 
-W Heroy Ave
-W Longfellow Ave 
-W Rockwell Ave 
-W Lacrosse Ave 
-W Walton Ave 
-W Garland Ave 
-W Providence Ave 
-W Kiernan Ave
-W Gordon Ave
-W Glass Ave
-W Cora Ave 
-W Alice Ave 
-W Dalton Ave 
-W Euclid Ave 
-W Park Pl
-W Waverly Pl 
-W Cleveland Ave 
-W Buckeye Ave 
-W Chelan Ave 
-W York Ave 
-W Jackson Ave 
-W Carlisle Ave 
-W Montgomery Ave 
-W Mansfield Ave 
-W Knox Ave
-W Shannon Ave 
-W Indiana Ave
+                     1. N Monroe St     2. N Lincoln St       3. N Post St      4. N Wall St      5. N Howard St       6. N Stevens St      7. N Washington St       8. N Whitehouse St       9. N Calispel St      10. N Normandie St       11. N Atlantic St      12. N Division St
+1. W Francis Ave
+2. W Dalke Ave 
+3. W Central Ave 
+4. W Columbia Ave 
+5. W Joseph Ave 
+6. W Nebraska Ave 
+7. W Rowan Ave
+8. W Everett Ave 
+9. W Queen Ave 
+10. W Wabash Ave 
+11. W Wellesley Ave 
+12. W Princeton Ave 
+13. W Heroy Ave
+14. W Longfellow Ave 
+15. W Rockwell Ave 
+16. W Lacrosse Ave 
+17. W Walton Ave 
+18. W Garland Ave 
+19. W Providence Ave 
+20. W Kiernan Ave
+21. W Gordon Ave
+22. W Glass Ave
+23. W Cora Ave 
+24. W Alice Ave 
+25. W Dalton Ave 
+26. W Euclid Ave 
+27. W Park Pl
+28. W Waverly Pl 
+29. W Cleveland Ave 
+30. W Buckeye Ave 
+31. W Chelan Ave 
+32. W York Ave 
+33. W Jackson Ave 
+34. W Carlisle Ave 
+35. W Montgomery Ave 
+36. W Mansfield Ave 
+37. W Knox Ave
+38. W Shannon Ave 
+39. W Indiana Ave
 
 MAP OF THE EAST SIDE OF OUR MINI CITY
 
-                 N Division St        N Stuart St         N Ruby St       N Mayfair St      N Colton St        N Lidgerwood St     N Astor St        N Addison St        N Wiscomb St     N Standard St         N Dakota St       N Cincinnati St        N Hamilton St       N Nevada St       N Columbus St      N Morton St     N Denver St       N Perry St      N Hogan St      N Helena St      N Madelia St    N Pittsburg St     N Magnolia St       N Napa St        N Martin St        N Crestline St       N Lee St        N Stone St       N Altamont St    N Cook St      N Smith St      N Lacey St      N Nelson St    N Regal St      N Haven St      N Market St
-E Francis
-E Decatur Ave
-E Dalke Ave
-E Bismark Ave
-E Central Ave
-E Columbia Ave
-E Joseph Ave
-E Nebraska Ave
+                 N Division St        N Stuart St         N Ruby St       N Mayfair St      N Colton St        N Lidgerwood St     N Astor St        N Addison St        N Wiscomb St     N Standard St         N Dakota St       N Cincinnati St        N Hamilton St       N Nevada St       N Columbus St      N Morton St     N Denver St       N Perry St      N Hogan St      N Helena St      N Madelia St    N Pittsburg St     N Magnolia St       N Napa St        N Martin St        N Crestline St                                 
+1. E Francis
+2. E Decatur Ave
+3. E Dalke Ave
+4. E Bismark Ave
+5. E Central Ave
+6. E Columbia Ave
+7. E Joseph Ave
+8. E Nebraska Ave
 E Rowan Ave
 E North Ave
 E North-Sanson Alley
