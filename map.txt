@@ -63,7 +63,11 @@ MAP OF THE WEST SIDE OF OUR MINI CITY
 
 MAP OF THE EAST SIDE OF OUR MINI CITY
 
-                1. N Division St      2. N Stuart St      3. N Ruby St     4. N Mayfair St    5. N Colton St      6. N Lidgerwood St    7. N Astor St      8. N Addison St     9. N Wiscomb St    10. N Standard St       11.  N Dakota St     12.  N Cincinnati St      13. N Hamilton St     14.  N Nevada St      15. N Columbus St     16. N Morton St    17. N Denver St      18. N Perry St     19. N Hogan St     20. N Helena St     21. N Madelia St    22. N Pittsburg St    23. N Magnolia St      24. N Napa St      25.  N Martin St      26. N Crestline St                                 
+Stuart
+Colton
+Denver
+
+                1. N Division St      2. N Ruby St     3. N Mayfair St    4. N Lidgerwood St    5. N Astor St      6. N Addison St     7. N Wiscomb St    8. N Standard St       9.  N Dakota St     10.  N Cincinnati St      11. N Hamilton St     12.  N Nevada St      13. N Columbus St     14. N Morton St    15. N Perry St     16. N Hogan St     17. N Helena St     18. N Madelia St    19. N Pittsburg St    20. N Magnolia St      21. N Napa St      22.  N Martin St      23. N Crestline St                                 
 1. E Francis
 2. E Decatur Ave
 3. E Dalke Ave
