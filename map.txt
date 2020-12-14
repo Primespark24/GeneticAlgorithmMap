@@ -63,7 +63,7 @@ MAP OF THE WEST SIDE OF OUR MINI CITY
 
 MAP OF THE EAST SIDE OF OUR MINI CITY
 
-                 N Division St        N Stuart St         N Ruby St       N Mayfair St      N Colton St        N Lidgerwood St     N Astor St        N Addison St        N Wiscomb St     N Standard St         N Dakota St       N Cincinnati St        N Hamilton St       N Nevada St       N Columbus St      N Morton St     N Denver St       N Perry St      N Hogan St      N Helena St      N Madelia St    N Pittsburg St     N Magnolia St       N Napa St        N Martin St        N Crestline St                                 
+                1. N Division St      2. N Stuart St      3. N Ruby St     4. N Mayfair St    5. N Colton St      6. N Lidgerwood St    7. N Astor St      8. N Addison St     9. N Wiscomb St    10. N Standard St       11.  N Dakota St     12.  N Cincinnati St      13. N Hamilton St     14.  N Nevada St      15. N Columbus St     16. N Morton St    17. N Denver St      18. N Perry St     19. N Hogan St     20. N Helena St     21. N Madelia St    22. N Pittsburg St    23. N Magnolia St      24. N Napa St      25.  N Martin St      26. N Crestline St                                 
 1. E Francis
 2. E Decatur Ave
 3. E Dalke Ave
@@ -72,51 +72,45 @@ MAP OF THE EAST SIDE OF OUR MINI CITY
 6. E Columbia Ave
 7. E Joseph Ave
 8. E Nebraska Ave
-E Rowan Ave
-E North Ave
-E North-Sanson Alley
-E Sanson Ave
-E Everett Ave
-E Diamond Ave
-E Crown Ave
-E Queen Ave
-E Olympic Ave
-E Wabash Ave
-E Broad Ave
-E Wellesley Ave
-E Hoffman Ave
-E Princeton Ave
-E Heroy Ave
-E Longfellow Ave
-E Rich Ave
-E Rockwell Ave
-E Lacrosse Ave
-E Ostrander Ave
-E Walton Ave
-E Garland Ave
-E Empire Ave
-E Providence Ave
-E Kiernan Ave
-E Gordan Ave
-E Glass Ave
-E Garnet Ave
-E Courtland Ave
-E Bridgeport Ave
-E Liberty Ave
-E Dalton Ave
-E Euclid Ave
-E Fairview Ave
-E Cora Ave
-E Cleveland Ave
-E North Foothills Dr
-E Grace Ave
-E Buckeye Ave
-E Marietta Ave
-E Avon Pl
-E Jackson Ave
-E Charlisle Ave
-E Montgomery Ave
-E Illinois Ave
-E Ermina Ave
-E Baldwin Ave
-E Indiana Ave
+9. E Rowan Ave
+10. E North Ave
+11. E Sanson Ave
+12. E Everett Ave
+13. E Crown Ave
+14. E Queen Ave
+15. E Olympic Ave
+16. E Wabash Ave
+17. E Broad Ave
+18. E Wellesley Ave
+19. E Hoffman Ave
+20. E Princeton Ave
+21. E Heroy Ave
+22. E Longfellow Ave
+23. E Rich Ave
+24. E Rockwell Ave
+25. E Lacrosse Ave
+26. E Walton Ave
+27. E Garland Ave
+28. E Empire Ave
+29. E Providence Ave
+30. E Kiernan Ave
+31. E Gordan Ave
+32. E Glass Ave
+33. E Courtland Ave
+34. E Bridgeport Ave
+35. E Liberty Ave
+36. E Dalton Ave
+37. E Euclid Ave
+38. E Fairview Ave
+39. E Cleveland Ave
+40. E North Foothills Dr
+41. E Grace Ave
+42 E Buckeye Ave
+43. E Marietta Ave
+44. E Jackson Ave
+45. E Carlisle Ave
+46. E Montgomery Ave
+47. E Illinois Ave
+48. E Ermina Ave
+49. E Baldwin Ave
+50. E Indiana Ave
