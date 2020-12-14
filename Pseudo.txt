@@ -31,4 +31,18 @@ The numbers are a 0, 1, 2(0 standing for no road there, 1 for intersection to bo
 
 
 Assumptions: 
+- If a road is disconnected by a short distance like so:
+
+                           |
+						   |
+						   |
+						   |
+						   |_________
+						             |
+									 |
+									 |
+									 |
+									 |
+									 |
+   we treat that situation as if the road doesn't disconnect 
 -one ways do not exist in our map
