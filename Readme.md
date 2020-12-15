@@ -19,6 +19,7 @@ In order to realistically simulate a delivery service within the scope of this p
 * If the bot is traveling on a road, it is allowed to make a U-turn.  It can reverse directions without worrying about traffic laws.  
 * The shortest distance between 2 locations is defined simply as Google's satellite distance between the two locations; traffic, road construction and other variables are neglected.
 * If a road is disconnected by a small distance, we treat that situation as though the road stays connected.  The following pictorial example helps visualize this siutation:
+  
         ___Rowan Ave_______                                     |
                           
                            |                                    |
