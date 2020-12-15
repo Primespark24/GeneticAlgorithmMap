@@ -2,6 +2,7 @@
 Welcome to our Whitworth Advanced Algorithms and Analysis Final Project!  We created a genetic algorithm.  Genetic algorithms are loosely based on the principles of natural selection and evolution.  They have a unique ability to search problem spaces to calculate optimal solutions much faster than humans.  The problem space that we chose to define is the navigation of a small portion of the city streets in Spokane.  Our vision for this algorithm is to optimize the travel routes for a delivery service.  We set the genetic algorithm free upon the defined map of Spokane and allow it to calculate an optimized travel route given a set of input locations.
 
 Authors: Brycen Martin, Jonathan Laughlin and Shane Snediker
+
 Updated: December 15, 2020
 
 ## Goals
@@ -50,6 +51,27 @@ At this point the population enters the reproductive process. Because an agent's
 * Mutation
 Mutation is critical for persistent genetic variety which helps your algorithm avoid local maxima. Within the crossover process, we subject every new child to the possibility of mutation according to a random number generator that is tied to probabilities. For the first 10 generations of agents, every new baby bot has a 15% chance of getting mutated. For generations 11-20 every new baby bot has a 10% chance of getting mutated. And every generation thereafter the baby bots have a 5% chance of mutation. Our method of mutation is to pull a strand of DNA that is 10% of the total DNA sequence from a random location within the sequence and randomly generate completely new DNA instructions.
 
+### Worst Case Scenario Algorithm Analysis
+
 ## Files
+* agent.py
+
+This is the file that gives definition to the individual GA bots.
+
+* city.py
+
+This file defines our problem space.  Included is hard coded definitions of every intersection in a 6 square mile radius of North Spokane.
+
+* Main.py
+
+The main file that defines program operation.
+
+* Reproduction.py
+  
+The file containing the core Genetic Algorithm components (Encoding, Selection, Crossover, Mutation, Fitness).
+
+* map.txt
+
+A text file containing a copy of the streets utilized in the simulation
 
 ## Works Cited 
