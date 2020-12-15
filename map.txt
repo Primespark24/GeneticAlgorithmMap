@@ -1,9 +1,10 @@
 # Brycen Martin, Jonathan Laughlin and Shane Snediker
 # Dr. Jones CS473
 # Genetic Algorithm Final Project
-# Updated December 13, 2020
+# Updated December 15, 2020
 
-This text file is a representation of our city, to preserve the crossroad information
+This text file is a representation of our city, to preserve the crossroad information.
+
 We've split the city into 2 halves: West and East
 For the following representation, the first line contains the N/S crossroads in the order
 that they appear within the city from west to east (i.e. For the WEST half of our map,
