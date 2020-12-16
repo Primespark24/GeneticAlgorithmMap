@@ -29,7 +29,7 @@ class Reproduction:
     number_of_survivors = None  # Value representing the amount of agents left alive after each round of evolution
     global_gen_counter = 1      # A counter that tracks the current generation number
     agent_DNA_length = None     # Store how long the agents DNA strands are
-    city = None                 # Maze object that the population is bound to
+    city = None                 # city object that the population is bound to
     average_fitness = 100       # Double data type representing a generation's average fitness score
     top_score = 120             # Integer representing the generation's highest fitness score
     agent_color = RED           # Defines what color the agent will be displayed as
@@ -39,7 +39,7 @@ class Reproduction:
     #### Class Methods 
     #########################################
 
-    # Reproduction constructor to initialize a population of agents to traverse the maze
+    # Reproduction constructor to initialize a population of agents to traverse the city
     # Parameters:  size: An integer value representing the amount of agents in this population
     #              city: A city object representing the space that this population will traverse
     #              dna_length: An integer value representing the amount of genes each agent in the population has
@@ -48,7 +48,7 @@ class Reproduction:
         self.pop_size = size                    # Amount of agents in this population
         self.number_of_survivors = size // 2    # An integer value representing half of the population
         self.agent_DNA_length = dna_length      # The length of each agent's DNA sequence
-        self.city = city                        # Connect this population to the maze
+        self.city = city                        # Connect this population to the city
         # Fill up the agent list with agents
         for _ in range(size):
             self.Agent_quiver.append(copy.deepcopy(Agent.Agent(self.city, dna_length)))
@@ -92,7 +92,7 @@ class Reproduction:
         ave_title_Rect = ave_title_text.get_rect()
         top_score_title_Rect = top_score_title_text.get_rect()
 
-        # Now we place our rectangles on our maze: 1st parameter is the x coordinate of the upper left corner of the rectangle
+        # Now we place our rectangles on our city: 1st parameter is the x coordinate of the upper left corner of the rectangle
         # The 2nd parameter is the y coordinate of the upper left corner of the rectangle
         gen_title_Rect.center = (280, 430)
         ave_title_Rect.center = (250 , 460)
@@ -106,15 +106,15 @@ class Reproduction:
     
     ### HERE IS WHERE WE NEED TO TRY TO INCORPORATE MORE DELIVERY LOCATIONS INTO THE PROGRAM
     
-    # Function for resetting the population at the maze entrance
-    # Once a population has completed a generation of movement, reset them to the beginning of the maze
+    # Function for resetting the population at the city entrance
+    # Once a population has completed a generation of movement, reset them to the beginning of the city
     def reset(self, screen):
         for x in range(self.pop_size):
             self.Agent_quiver[x].current_position = self.city.BEGIN_LOC
             self.Agent_quiver[x].current_orientation = self.city.CITY_START_ORIENTATION
             self.Agent_quiver[x].fitness_score = 0
-            # Draw all of the agents at the maze entrance
-            pygame.draw.rect(screen, self.agent_color, [self.maze.CELL_SIZE * self.Agent_quiver[x].current_position[0], self.maze.CELL_SIZE * self.Agent_quiver[x].current_position[1], self.maze.CELL_SIZE, self.maze.CELL_SIZE])
+            # Draw all of the agents at the city entrance
+            pygame.draw.rect(screen, self.agent_color, [self.city.CELL_SIZE * self.Agent_quiver[x].current_position[0], self.city.CELL_SIZE * self.Agent_quiver[x].current_position[1], self.city.CELL_SIZE, self.city.CELL_SIZE])
         # update what we've drawn
         pygame.display.update()
 
@@ -321,7 +321,7 @@ class Reproduction:
             # We now have a list of DNA genes that is an ordered mixture of 2 parents
             # Now we create a new child infusing them with the DNA resulting from the
             # crossover reproduction process
-            new_child = Agent.Agent(self.maze, self.agent_DNA_length, new_child_DNA)
+            new_child = Agent.Agent(self.city, self.agent_DNA_length, new_child_DNA)
 
             
             # The last part of the reproductive process is to introduce mutation
