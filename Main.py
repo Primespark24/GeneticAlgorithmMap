@@ -4,16 +4,16 @@
 # Updated December 14, 2020
 
 
-import Agent        # import user defined agent class to represent maze navigating agents
-import Maze         # import user defined Maze class to represent the environment
-import Population   # import user defined Population Class
+import Agent        # import user defined agent class to represent City navigating bots
+import City         # import user defined City class to represent the problem space
+import Reproduction # import user defined Reproduction Class
 import pygame       # import pygame library to display graphics
 import copy         # import the copy library used for making deep copies of variables
 import os           # Allows us to control where the maze window pops up on the screen
 
-# Define our maze colors
+# Define our city colors
 BLACK = (0, 0, 0)          # Background color
-RED = (255, 0, 0)          # Maze obstacle colors
+RED = (255, 0, 0)          # City street colors
 WHITE = (255, 255, 255)    # Agent test color
 BLUE = (50, 50, 255)       # Agent test color
 TEAL = (0, 128, 128)       # Stat counters
@@ -28,15 +28,15 @@ clock = None
 screen = None
 
 # Function that initializes pygame object which allows us to draw a maze to the screen
-# Parameter:  maze: a maze object containing the graphical maze data
-def pygame_setup(maze):
-    # Initialize the pygame library that facilitates the graphical maze
+# Parameter:  city: a city object containing the graphical city data
+def pygame_setup(city):
+    # Initialize the pygame library that facilitates the graphical representation of the city
     pygame.init()
-    # create a screen to draw the maze on
+    # create a screen to draw the city on utilizing the pygame library
     global screen
-    screen = pygame.display.set_mode([maze.MAZE_SIZE[0], maze.MAZE_SIZE[1] + 100])
+    screen = pygame.display.set_mode([City.CITY_SIZE[0], City.CITY_SIZE[1] + 100])
     # Set title of screen
-    pygame.display.set_caption("Artificial Intelligence Final Project Spring 2020")
+    pygame.display.set_caption("Advanced Algorithms Final Project Spring 2020")
     # Declaration of a clock variable that utilizes a clock function
     # from the pygame library that mediates the speed of the screen updates
     global clock
@@ -45,42 +45,42 @@ def pygame_setup(maze):
     screen.fill(BLACK)
 
 # Function that paints our graphical maze to the screen
-# Parameter:  maze: a maze object containing the graphical maze data
-def draw_maze(maze): 
-    # Draw the maze one time before entering the game loop
+# Parameter:  city: a city object containing the graphical data
+def draw_city(city): 
+    # Draw the city one time before entering the game loop
     # For every one of the 41 rows in the grid
     for row in range(41):
         # And every one of the 70 columns as well              
         for column in range(70):
             # Let's make the background black
             color = BLACK
-            # Now we iterate through our 2 dimensional array and print obstacle locations in red              
-            if maze.MAZE_GRID[row][column] == 1:
+            # Now we iterate through our 2 dimensional array and print street locations in red              
+            if city.CITY_GRID[row][column] == 1:
                 color = BLUE
             # The pygame draw.rect function takes 3 primary arguments:
             # The first argument is the surface on which the rectangle will be drawn
             # The second is the desired color of the rectangle
-            # The third is a list/tuple with the following values in this order:
+            # The third is a tuple with the following values in this order:
             # x coordinate, y coordinate, width of rectangle, Height of rectangle, and the thickness of the rectangle lines
             # If no argument is given for the thickness parameter (like in our case), then the default is to fill the rectangle with the color argument
             pygame.draw.rect(screen,
                              color,
                              # x coordinate is the product of the cell width and the current column 
-                             [maze.CELL_SIZE * column,   
+                             [city.CELL_SIZE * column,   
                              # y coordinate is the product of the cell height and the current row     
-                             maze.CELL_SIZE * row,     
+                             city.CELL_SIZE * row,     
                              # rectangle width
-                             maze.CELL_SIZE,             
+                             city.CELL_SIZE,             
                              # rectangle height
-                             maze.CELL_SIZE])
+                             city.CELL_SIZE])
     # Update the screen with what has been drawn
     pygame.display.update()        
 
 # Function to move every agent in a population one time
-# Parameter:  pop: a population object representing the population of agents traversing the maze
+# Parameter:  pop: a population object representing the population of agents traversing the city
 #             a_divisor: divides amount of agents displayed by this number      (cuts down complexity for larger samples)
 #             dna_divisor: divides the amount of actions displayed by this number (cuts down complexity for larger samples)
-def move_population_once(pop,a_divisor = 1,dna_divisor = 1):
+def move_population_once(pop,a_divisor = 1, dna_divisor = 1):
     # Boolean flag that gets set if an agent was able to move and changed positions
     Moved = False
     # Declare a couple of global variables to track the agent's traversal through their DNA sequence 
@@ -90,15 +90,14 @@ def move_population_once(pop,a_divisor = 1,dna_divisor = 1):
         # move every agent once
         for x in range(pop.pop_size):
             # Capture each agent in the population's movement status
-            Moved = pop.Agent_quiver[x].move(actionNumber,pop.maze)
+            Moved = pop.Agent_quiver[x].move(actionNumber, pop.maze)
             # If an agent changes positions, update the screen
             if (Moved == True) and (actionNumber % dna_divisor == 0) and ((x == (pop.pop_size -1)) or (x % a_divisor == 0)):
-                # pop.Agent_quiver[x] == pop.Agent_quiver[pop.pop_size-1]
-                #change the previous position to black
+                # change the previous position to black
                 color = BLACK
-                #Peek line 59 for draw.rect() argument explanation
+                # Peek line 60 for draw.rect() argument explanation
                 pygame.draw.rect(screen, color, [pop.maze.CELL_SIZE * pop.Agent_quiver[x].previous_position[0], pop.maze.CELL_SIZE * pop.Agent_quiver[x].previous_position[1], pop.maze.CELL_SIZE, pop.maze.CELL_SIZE])
-                #update the new position to Red
+                # update the new position to Red
                 color = RED
                 pygame.draw.rect(screen, color, [pop.maze.CELL_SIZE * pop.Agent_quiver[x].current_position[0], pop.maze.CELL_SIZE * pop.Agent_quiver[x].current_position[1], pop.maze.CELL_SIZE, pop.maze.CELL_SIZE])
                 # Update the screen with what has been drawn
@@ -109,8 +108,8 @@ def move_population_once(pop,a_divisor = 1,dna_divisor = 1):
     else:
         done_moving = True
 
-# Function that resets the maze erasing the previous generation of agents and placing the new generation at the maze entrance
-# Parameter:  pop: a population object representing a population of agents traversing the maze
+# Function that resets the city erasing the previous generation of agents and placing the new generation at the beginning location
+# Parameter:  pop: a reproduction object representing a new generation of agents traversing the city
 def clear_screen(pop):
     # Draw over all agents with black, clean the board
     for x in range(pop.pop_size):
@@ -156,7 +155,7 @@ def button(msg,x,y,w,h,ic,ac,action=None):
     textRect.center = ( (x+(w//2)), (y+(h//2)) )
     screen.blit(textSurf, textRect)
 
-# first function called before main game loop is started
+# The first function called before main game loop is started
 def game_intro():
     intro = True
     while intro:
@@ -169,7 +168,7 @@ def game_intro():
 
 ######### Highlight all the agents that are selected to get eaten ###########
 # A fun, miscellaneous function that highlights on the screen the agents with the lowest fitness at the end of a generation
-# Parameter:  pop: a population object representing a population of agents traversing the maze
+# Parameter:  pop: a Reproduction object representing a generation of agents traversing the city
 def highlight_weak(pop):
     # Declare a variable that will capture the weakest agents from a generation of an agent population
     weakest = pop.kill_the_weak()
@@ -201,30 +200,30 @@ def highlight_parents(pop):
 # Basic Genetic Algorithm Pseudo Code:
 # 1: Seed first generation
 # 2: do while(TerminationCondition != True):
-# 3:    population.move()
-# 4:    population.calculate_fitness()
-# 5:    population.select_parents()
-# 6:    population.crossover&mutate()
-# 7:    population.kill_the_weak()
-# 8:    population.reset()
+# 3:    reproduction.move()
+# 4:    reproduction.calculate_fitness()
+# 5:    reproduction.select_parents()
+# 6:    reproduction.crossover&mutate()
+# 7:    reproduction.kill_the_weak()
+# 8:    reproduction.reset()
 #########################################################
 
 # ----------------- Start of Main Program Loop ----------------------------------------------------
-# Instantiate a maze
-maze_instance = Maze.Maze()
-# Seed the first population to navigate the maze giving it (pop_size, maze object, DNA_length declaration)
-test_population = Population.Population(30, maze_instance, 300)
+# Instantiate a city
+maze_instance = City.City()
+# Seed the first population to navigate the city giving it (pop_size, city object, DNA_length declaration)
+test_population = Reproduction.Reproduction(30, maze_instance, 300)
 # setup pygame display
-pygame_setup(test_population.maze)
+pygame_setup(test_population.city)
 # display the maze to the pygame window
-draw_maze(test_population.maze)
+draw_city(test_population.city)
 
-done_moving = False     # The flag that allows the maze to loop until the user clicks the close button
+done_moving = False     # The flag that allows the city to loop until the user clicks the close button
 actionNumber = 0        # This is the DNA index for the agent to execute each loop
-FPS = 1000               # defines game loop frames per second; lower numbers can be used to more closely observe agent movement
+FPS = 1000              # defines game loop frames per second; lower numbers can be used to more closely observe agent movement
 exited = False          # Flag holding the screen open
 
-# main game loop where evolution of populations take place
+# main game loop where evolution of reproductions take place
 def game_loop():
     
     global done_moving, actionNumber, FPS, exited
@@ -251,10 +250,10 @@ def game_loop():
             
         # Only continue with program, if window has not been exited
         if not exited:
-            # RESET variables so next generation can be spawned into the maze
+            # RESET variables so next generation can be spawned into the city
             done_moving = False
             actionNumber = 0
-            # Clear the maze
+            # Clear the screen
             clear_screen(test_population)
             
             ######################
@@ -268,7 +267,6 @@ def game_loop():
             #####################################################################
             children = test_population.crossover()
             
-
             ##########################
             ## Kill the weakest agents
             ##########################
