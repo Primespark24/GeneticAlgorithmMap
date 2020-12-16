@@ -4,30 +4,32 @@
 # Updated December 14, 2020
 
 
-import Maze         # Import user defined class that provides graphical maze data
+import City         # Import user defined class that provides graphical city data
 import Agent        # Import user defined class that defines individual agents
 import pygame       # Import Python library in order to be able to display stats to the screen
 import random       # Import Python random library for generating random numbers
 import copy         # Import Python copy library for making deep copies
 from operator import itemgetter, attrgetter # used in sorting agents by fitness score
 
-
+# Colors
 RED = (255,0,0)
+GREY = (200, 200, 200)
+BLACK = (0, 0, 0)
 
 # Population class
 # Class for organizing the agent population and reproduction
-class Population:
+class Reproduction:
 
     #########################################
     #### Class Attributes 
     #########################################
 
     pop_size = None             # The size of each generation of agents
-    Agent_quiver = []       # An array containing the current Agent objects in the population
+    Agent_quiver = []           # An array containing the current Agent objects in the population
     number_of_survivors = None  # Value representing the amount of agents left alive after each round of evolution
     global_gen_counter = 1      # A counter that tracks the current generation number
     agent_DNA_length = None     # Store how long the agents DNA strands are
-    maze = None                 # Maze object that the population is bound to
+    city = None                 # Maze object that the population is bound to
     average_fitness = 100       # Double data type representing a generation's average fitness score
     top_score = 120             # Integer representing the generation's highest fitness score
     agent_color = RED           # Defines what color the agent will be displayed as
@@ -37,26 +39,26 @@ class Population:
     #### Class Methods 
     #########################################
 
-    # Population constructor to initialize a population of agents to traverse the maze
+    # Reproduction constructor to initialize a population of agents to traverse the maze
     # Parameters:  size: An integer value representing the amount of agents in this population
-    #              maze: A maze object representing the maze that this population will traverse
+    #              city: A city object representing the space that this population will traverse
     #              dna_length: An integer value representing the amount of genes each agent in the population has
-    def __init__(self, size, maze, dna_length):
+    def __init__(self, size, city, dna_length):
         # Give this population's member variables their values based on the population you're instantiating
         self.pop_size = size                    # Amount of agents in this population
         self.number_of_survivors = size // 2    # An integer value representing half of the population
         self.agent_DNA_length = dna_length      # The length of each agent's DNA sequence
-        self.maze = maze                        # Connect this population to the maze
+        self.city = city                        # Connect this population to the maze
         # Fill up the agent list with agents
         for _ in range(size):
-            self.Agent_quiver.append(copy.deepcopy(Agent.Agent(self.maze, dna_length)))
+            self.Agent_quiver.append(copy.deepcopy(Agent.Agent(self.city, dna_length)))
 
     # Function that calculates the fitness for every agent in the population
     # Should be called after after each round of movement
     def calculate_fitness(self):
         # Calculate fitness for each individual agent
         for x in range(len(self.Agent_quiver)):
-            self.Agent_quiver[x].calculate_fitness(self.maze)
+            self.Agent_quiver[x].calculate_fitness(self.city)
         # Sort the agent quiver by fitness scores from lowest at early indices to highest at latter indices
         self.Agent_quiver = sorted(self.Agent_quiver, key = attrgetter('fitness_score'), reverse = False) 
         
@@ -72,11 +74,7 @@ class Population:
         # Capture the top score in the top_score member variable
         self.top_score = self.Agent_quiver[self.pop_size - 1].fitness_score
 
-        ################### Display stats to the screen ##################
-        
-        # Colors
-        GREY = (200, 200, 200)       # Stat counters
-        BLACK = (0, 0, 0)          # Background color
+        ################### Display stats to the screen #####################
 
         # Create our font objects to give our display boxes a font and font size
         # The 1st parameter is the font file which pygame contains and the second parameter is the font size
@@ -86,46 +84,35 @@ class Population:
         # 1st parameter is what gets written, 2nd is a special pygame antialias boolean
         # that needs to be set to True, the 3rd is the font color, and the 4th is the background color 
         gen_title_text = stats_font.render('Currently featuring generation: ' + str(self.global_gen_counter + 1), True, GREY, BLACK)
-        # gen_display_text = gen_display_font.render(str(self.global_gen_counter + 1), True, TEAL, BLACK)
         ave_title_text = stats_font.render('Previous generation average fitness: ' + str(self.average_fitness), True, GREY, BLACK)
-        # ave_display_text = ave_display_font.render(str(self.average_fitness), True, TEAL, BLACK)
         top_score_title_text = stats_font.render('Previous generation top score: ' + str(self.top_score), True, GREY, BLACK)
-        # top_score_display_text = top_score_display_font.render(str(self.top_score), True, TEAL, BLACK) 
 
         # Now we create rectangle objects for our text surfaces to be placed in
         gen_title_Rect = gen_title_text.get_rect() 
-        # gen_display_Rect = gen_display_text.get_rect()
         ave_title_Rect = ave_title_text.get_rect()
-        # ave_display_Rect = ave_display_text.get_rect()
         top_score_title_Rect = top_score_title_text.get_rect()
-        # top_score_display_Rect = top_score_display_text.get_rect() 
 
         # Now we place our rectangles on our maze: 1st parameter is the x coordinate of the upper left corner of the rectangle
         # The 2nd parameter is the y coordinate of the upper left corner of the rectangle
         gen_title_Rect.center = (280, 430)
-        # gen_display_Rect.center = (480, 430)
         ave_title_Rect.center = (250 , 460)
-        # ave_display_Rect.center = (490 , 460)
         top_score_title_Rect.center = (280 , 490)
-        # top_score_display_Rect.center = (488 , 490) 
 
         # Finally, we copy the text surfaces to the screen at the rectangle's coordinates
         screen.blit(gen_title_text, gen_title_Rect) 
-        # screen.blit(gen_display_text, gen_display_Rect)
         screen.blit(ave_title_text, ave_title_Rect)
-        # screen.blit(ave_display_text, ave_display_Rect)
         screen.blit(top_score_title_text, top_score_title_Rect)
-        # screen.blit(top_score_display_text, top_score_display_Rect)
 
-
+    
+    ### HERE IS WHERE WE NEED TO TRY TO INCORPORATE MORE DELIVERY LOCATIONS INTO THE PROGRAM
+    
     # Function for resetting the population at the maze entrance
     # Once a population has completed a generation of movement, reset them to the beginning of the maze
     def reset(self, screen):
         for x in range(self.pop_size):
-            self.Agent_quiver[x].current_position = self.maze.MAZE_START
-            self.Agent_quiver[x].current_orientation = self.maze.MAZE_START_ORIENTATION
+            self.Agent_quiver[x].current_position = self.city.BEGIN_LOC
+            self.Agent_quiver[x].current_orientation = self.city.CITY_START_ORIENTATION
             self.Agent_quiver[x].fitness_score = 0
-            self.agent_hit_wall = 0
             # Draw all of the agents at the maze entrance
             pygame.draw.rect(screen, self.agent_color, [self.maze.CELL_SIZE * self.Agent_quiver[x].current_position[0], self.maze.CELL_SIZE * self.Agent_quiver[x].current_position[1], self.maze.CELL_SIZE, self.maze.CELL_SIZE])
         # update what we've drawn
@@ -136,7 +123,7 @@ class Population:
     def move(self, DNA_index):
         # Iterate through the agent quiver moving each individual agent
         for x in self.pop_size:
-            self.Agent_quiver[x].move(DNA_index,self.maze)
+            self.Agent_quiver[x].move(DNA_index,self.city)
 
     # This method selects the parents for the next generation using Roulette Wheel Selection
     # Implementation details referenced from: https://www.tutorialspoint.com/genetic_algorithms/genetic_algorithms_parent_selection.htm
@@ -180,7 +167,6 @@ class Population:
             if (selected_parent_index == previously_selected_parent):
                 # decrement loop counter to ensure N parents are selected
                 x -= 1
-                #print("Parent cannot mate with itself")
             # else if the selected parent is a different agent then the previously selected agent, add to selection list
             else:
                 # Add this index to the list of indices to be selected
@@ -195,16 +181,16 @@ class Population:
     # This method removes the least fit agents from the population based on number_of_survivors member variable
     # This method is called each time new children have been created to create room in the population for the children to replace
     def kill_the_weak(self):
-        # # Begin by aligning the population of agents from the fittest to the weakest (Fitter agents have higher scores)
-        # ordered_agents = sorted(self.Agent_quiver, key = attrgetter('fitness_score'), reverse = True)
-        # # Now we kill a portion of the population
-        # # Let's initialize an array to hold the survivors
+        # Begin by aligning the population of agents from the fittest to the weakest (Fitter agents have higher scores)
+        #ordered_agents = sorted(self.Agent_quiver, key = attrgetter('fitness_score'), reverse = True)
+        # Now we kill a portion of the population
+        # Let's initialize an array to hold the survivors
         weak = []
-        # # Now we iterate through the list of fitness sorted agents saving the fittest portion
+        # Now we iterate through the list of fitness sorted agents saving the fittest portion
         for x in range((self.number_of_survivors)):
              weak.append(self.Agent_quiver[x])
-        # # Copy over the fittest agents into the new quiver
-        # # Now the agent quiver will be half the size as it was when this function was called 
+        # Copy over the fittest agents into the new quiver
+        # Now the agent quiver will be half the size as it was when this function was called 
         # self.Agent_quiver = copy.deepcopy(Fittest)
         # self.Agent_quiver = sorted(self.Agent_quiver, key = attrgetter('fitness_score'), reverse = False)
         for agent in range((self.number_of_survivors)):
@@ -218,7 +204,6 @@ class Population:
     def add_children(self, children):
         # For as many children as there are in the children list, append a child to the agent quiver
         for x in range(len(children)):
-            # self.Agent_quiver.append(children[x])
             self.Agent_quiver.append(copy.deepcopy(children[x]))
     
     # Function to define DNA crossover reproduction
@@ -230,13 +215,13 @@ class Population:
     # combination as p1, and the second parent as p2.
     # Ultimately, in this version of crossover we want to take a DNA strand
     # of random size from p1 plucked from a random location within p1's DNA sequence.
-    # We then place that random strand at a random location within the child's DNA sequence.
+    # We then place the first index of that DNA strand at the same starting index in the new baby agent.
     # At that point we begin filling in the rest of the child's DNA structure with 
     # p2's DNA
     # Return:  new_pop: a list of agents resulting from the mating of selected parent agents
     def crossover(self):
         # We begin by initiating the selection by which the population of agents that has just
-        # completed the maze is assessed based on their fitness score and using probabilities
+        # completed city traversal is assessed based on their fitness score and using probabilities
         # chosen to participate in the reproduction process.  Every agent in the population 
         # has the statistical chance to make it into the selected_parents list, but agents
         # with the higher fitness scores have a higher probability of getting selected
@@ -363,7 +348,7 @@ class Population:
 
         # Let's increment the generation counter before we return from this method
         self.global_gen_counter += 1
-        # decrement mutation rate by 1 percent each round until reached .02
+        # decrement mutation rate by 1 percent each round until we reach .05
         if (self.mutation_rate > .05):
             self.mutation_rate -= .005
 

@@ -42,6 +42,7 @@ In order to realistically simulate a delivery service within the scope of this p
 ## Algorithm Analysis
 
 ### Key Genetic Algorithm Components
+
 * Encoding
   
 We initialize a seed population with an initial DNA consisting of completely random navigational directives. We hold the "genes" in a 1 dimensional array. Once the population size is predetermined a seed population of agents is initialized each given an initial random DNA sequence of instructions ('L', 'R', or 'F').
