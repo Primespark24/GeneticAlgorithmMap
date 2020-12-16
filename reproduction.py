@@ -43,7 +43,7 @@ class Reproduction:
     # Parameters:  size: An integer value representing the amount of agents in this population
     #              city: A city object representing the space that this population will traverse
     #              dna_length: An integer value representing the amount of genes each agent in the population has
-    def __init__(self, size, maze, dna_length):
+    def __init__(self, size, city, dna_length):
         # Give this population's member variables their values based on the population you're instantiating
         self.pop_size = size                    # Amount of agents in this population
         self.number_of_survivors = size // 2    # An integer value representing half of the population

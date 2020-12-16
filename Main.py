@@ -210,13 +210,13 @@ def highlight_parents(pop):
 
 # ----------------- Start of Main Program Loop ----------------------------------------------------
 # Instantiate a city
-maze_instance = City.City()
+city_instance = City.City()
 # Seed the first population to navigate the city giving it (pop_size, city object, DNA_length declaration)
-test_population = Reproduction.Reproduction(30, maze_instance, 300)
+test_reproduction = Reproduction.Reproduction(30, city_instance, 300)
 # setup pygame display
-pygame_setup(test_population.city)
+pygame_setup(test_reproduction.city)
 # display the maze to the pygame window
-draw_city(test_population.city)
+draw_city(test_reproduction.city)
 
 done_moving = False     # The flag that allows the city to loop until the user clicks the close button
 actionNumber = 0        # This is the DNA index for the agent to execute each loop
@@ -246,7 +246,7 @@ def game_loop():
             #####################
             
             # move the entire population one step forward
-            move_population_once(test_population,1,1)
+            move_population_once(test_reproduction,1,1)
             
         # Only continue with program, if window has not been exited
         if not exited:
@@ -254,35 +254,35 @@ def game_loop():
             done_moving = False
             actionNumber = 0
             # Clear the screen
-            clear_screen(test_population)
+            clear_screen(test_reproduction)
             
             ######################
             ## Calculate Fitess
             ######################
-            test_population.calculate_fitness()
-            test_population.get_fitness_stats(screen)      
+            test_reproduction.calculate_fitness()
+            test_reproduction.get_fitness_stats(screen)      
             # highlight_parents(test_population)
             #####################################################################
             ## Select Parents and Produce children through crossover and mutation
             #####################################################################
-            children = test_population.crossover()
+            children = test_reproduction.crossover()
             
             ##########################
             ## Kill the weakest agents
             ##########################
             # highlight_weak(test_population)
-            test_population.kill_the_weak()
+            test_reproduction.kill_the_weak()
 
             #############################
             ## Reset for next generation
             #############################
             
-            test_population.add_children(children)
+            test_reproduction.add_children(children)
             # move all agents back to the start of the maze
-            test_population.reset(screen)
+            test_reproduction.reset(screen)
             
-            print("Current generation: " + str(test_population.global_gen_counter))
-            print("Avg fitness: " + str(test_population.average_fitness) + "Top Fitness: " + str(test_population.top_score))
+            print("Current generation: " + str(test_reproduction.global_gen_counter))
+            print("Avg fitness: " + str(test_reproduction.average_fitness) + "Top Fitness: " + str(test_reproduction.top_score))
         
     # --------  End of Main Program Loop -----------
 

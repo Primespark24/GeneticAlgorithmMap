@@ -6,10 +6,10 @@
 # City Class defines our problem space: a mini portion of Spokane
 
 # Access Google's Spokane City Map API
-import googlemaps 
-from datetime import datetime
-from googlemaps import Client
-gmaps = Client(key='AIzaSyCFcf_BmN1Qm1q-a3yy07RXtPHMgOiyZ-w')
+#import googlemaps 
+#from datetime import datetime
+#from googlemaps import Client
+#gmaps = Client(key='AIzaSyCFcf_BmN1Qm1q-a3yy07RXtPHMgOiyZ-w')
 
 class City:
 
