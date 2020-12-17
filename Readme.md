@@ -83,19 +83,19 @@ The main file that defines program operation.  We utilized the Pygame graphics l
 
 For as many generations as is preset:
 
-  * Instantiate a City object to give robots a design space to explore
+     Instantiate a City object to give robots a design space to explore
 
-  * Instantiate a Reproduction object so that the robots can engage in traditional genetic algorithm operations like selection, crossover and mutation.
+     Instantiate a Reproduction object so that the robots can engage in traditional genetic algorithm operations like selection, crossover and mutation.
 
-  * Create a population of robots to search the problem space.
+     Create a population of robots to search the problem space.
 
-  * Unleash the robots within the problem space to execute 1 generation of genetic instructions.
+     Unleash the robots within the problem space to execute 1 generation of genetic instructions.
 
-  * Calculate fitness.
+     Calculate fitness.
 
-  * Select reproductive parents
+    Select reproductive parents
 
-  * Engage parents in crossover reproduction to add children to the next generation of bots.
+    Engage parents in crossover reproduction to add children to the next generation of bots.
 
 * Reproduction.py
   
