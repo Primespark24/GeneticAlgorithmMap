@@ -353,9 +353,20 @@ def game_loop():
     global done_moving, actionNumber, FPS, exited
 
     # Begin a loop that runs for as many generations as you use as an argument for the range function
-    for generation in range(100):
+    for generation in range(100000000):
         # While the user hasn't clicked the exit button and the generation is still navigating through their DNA sequences
         while ((not exited) and (not done_moving)):
+            pygame.draw.rect(screen,
+                    BLUE,
+                    # x coordinate is the product of the cell width and the current column 
+                    [1150,#square,   
+                    # y coordinate is the product of the cell height and the current row     
+                    130,#rowGraph,     
+                    # rectangle width
+                    10,             
+                    # rectangle height
+                    10])
+            pygame.display.update()
             # Define how many frames per second the simulation runs at
             clock.tick(FPS) # should be called once per frame
             # Checks if exit is clicked on

@@ -17,7 +17,7 @@ class City:
     ########################################
 
     # Initial bot grid parameters
-    DELIVERY_LOC = [70, 20]         # The location where the bot is delivering
+    DELIVERY_LOC = [115, 13]         # The location where the bot is delivering
     BEGIN_LOC = [1, 13]             # The location from which the bot is delivering
 
     # Default orientation is for agents to spawn in facing EAST

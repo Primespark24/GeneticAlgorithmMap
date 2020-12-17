@@ -24,6 +24,7 @@ class Agent:
     DNA_length = 500            # Variable representing the length of an agent's DNA structure
     fitness_score = 0           # Stores the agents overall fitness score computed after the final movement
     DNA_mutate_strand = (DNA_length // 10) # A holder variable that captures an integer value representing 10 percent of an agent's DNA
+    Deliv_reached = False
 
     #########################################
     #### Class Methods 
@@ -60,6 +61,7 @@ class Agent:
         # spawn the agent at the start of the maze
         self.current_position_map= copy.deepcopy(city.BEGIN_LOC)
         self.previous_position_map = copy.deepcopy(city.DELIVERY_LOC)
+        self.Deliv_reached = False
 
     # Update the agent's orientation according to which direction it turns
     # Parameters:  dir: A char containing one of 3 directions ('L' for left, 'R' for right, or 'F' for straight forward, and 'B' for u-turn)
@@ -195,13 +197,15 @@ class Agent:
         # Determine next position by capturing the next gene representing a directional movement
         action = self.DNA[action_iterator]
         # Calculate the next position of this agent based on the DNA instruction
-        next_position_city,next_position_map,changed_position = self.calculate_next_pos(action,city)
+        if(not self.Deliv_reached):
+            next_position_city,next_position_map,changed_position = self.calculate_next_pos(action,city)
         #print(next_position_city,next_position_map)
         
-        # if agent makes it to exit, increase fitness score to incentivize getting there ASAP
-        if (self.current_position_map[0] == city.DELIVERY_LOC[0] and self.current_position_map[1] == city.DELIVERY_LOC[1]) or (next_position_city[0] == city.DELIVERY_LOC[0] and next_position_city[1] == city.DELIVERY_LOC[1]):
-            # for every round of movement before the end of the DNA, add 5 points per "saved" action
-            self.fitness_score += 5
+            # if agent makes it to exit, increase fitness score to incentivize getting there ASAP
+            if (self.current_position_map[0] == city.DELIVERY_LOC[0] and self.current_position_map[1] == city.DELIVERY_LOC[1]) or (next_position_city[0] == city.DELIVERY_LOC[0] and next_position_city[1] == city.DELIVERY_LOC[1]):
+                # for every round of movement before the end of the DNA, add 5 points per "saved" action
+                self.Deliv_reached = True
+                self.fitness_score += 50
         
         
         ## THIS IS WHERE WE FIGURE OUT HOW TO CHANGE FROM THE ZEROES AND ONES OF A MAZE TO TRUE/FALSES OF OUR CITY
@@ -273,9 +277,11 @@ class Agent:
         # Use the distance formula to calculate fitness.  Not necessary to calculate the square root,
         # however because all that is necessary is a relative distance
         distance = (abs(city.DELIVERY_LOC[1] - self.current_position_map[1])) + (abs(city.DELIVERY_LOC[0] - self.current_position_map[0]) )
+        #print("Loacation x: ",self.current_position_map[1], "y:", self.current_position_map[0])
         # To avoid getting caught by a local minimum situation, let's give a bonus to 
         # agents that at least make it half way through the maze
-        if distance > 35:
+        half_distance = (abs(city.DELIVERY_LOC[1] - city.BEGIN_LOC[1])) + (abs(city.DELIVERY_LOC[0] - city.BEGIN_LOC[0]) // 2)
+        if distance > half_distance:
            distance -= 5
         
         # Now we pick an arbitrary number to subtract our current fitness score (distance) 
@@ -283,7 +289,7 @@ class Agent:
         # Because the distance calculated above favors smaller distances, we use this 
         # calculation to invert the values so that shorter distances from the maze exit
         # are reflected with higher fitness scores
-        self.fitness_score += (100 - distance)
+        self.fitness_score += (200 - distance)
          
 """
 # If the agent is currently facing down/south, determine its next position based on its current action
