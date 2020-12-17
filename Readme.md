@@ -3,14 +3,14 @@ Welcome to our Whitworth Advanced Algorithms and Analysis Final Project!  We cre
 
 Authors: Brycen Martin, Jonathan Laughlin and Shane Snediker
 
-Updated: December 15, 2020
+Updated: December 17, 2020
 
 ## Goals
 We intentionally defined a wide range of goals for this algorithm so as to help keep us focused.  We didn't want to settle for an elementary product, however, having rudimentary goals also helps us capture encouragement throughout the program design as the pieces begin to come together.  The following list comprises our set of goals, from simple to complex:
-* We've never connected a project to an API.  We want to sufficiently connect our map of Spokane to Google's API and use their geographical information
 * We will code a genetic algorithm (GA) bot, including all traditional elements of a GA (encoding, selection, crossover, mutation, ect.).
 * We will define an acceptable level of fitness for the GA so that it doesn't exert unnecessary, excessive time optimizing routes
 * Our GA bot will arrive at an initial location successfully
+* We've never connected a project to an API.  We want to sufficiently connect our map of Spokane to Google's API and use their geographical information
 * Given a fixed set of inputs, our GA bot will optimize a route to the delivery locations
 * Given a set of inputs that changes in real time, our GA bot will be able to alter its optimization calculations to determine an evolving optimization of delivery routes.
 * We will create a graphical representation of our bots traversing the problem space
@@ -45,7 +45,7 @@ In order to realistically simulate a delivery service within the scope of this p
 
 * Encoding
   
-We initialize a seed population with an initial DNA consisting of completely random navigational directives. We hold the "genes" in a 1 dimensional array. Once the population size is predetermined a seed population of agents is initialized each given an initial random DNA sequence of instructions ('L', 'R', or 'F').
+We initialize a seed population with an initial DNA consisting of completely random navigational directives. We hold the "genes" in a 1 dimensional array. Once the population size is predetermined a seed population of agents is initialized each given an initial random DNA sequence of instructions ('N', 'S', 'E', or 'W').
 
 * Selection
 
@@ -53,7 +53,7 @@ A generation of agents expires when each agent has completed its full array of g
 
 * Crossover
 
-At this point the population enters the reproductive process. Because an agent's fitness score is tied to the order of its movements, we desire to preserve this order in successive generations. Therefore, we use a method of crossover reproduction called ordered crossover. According to this strategy, we pull a random length strand of DNA from parent 1 from a random array starting index, we place this strand in the new_child DNA structure at the exact same starting index. We then fill in the remaining DNA indices with the corresponding genes from parent 2. The resulting child DNA array is an ordered mix of parent 1 and parent 2.
+At this point the population enters the reproductive process. Because an agent's fitness score is tied to the order of its movements, we want to preserve this order in successive generations. Therefore, we use a method of reproduction called ordered crossover. According to this strategy, we pull a random length strand of DNA from parent 1 from a random array starting index, we place this strand in the new_child DNA structure at the exact same starting index. We then fill in the remaining DNA indices with the corresponding genes from parent 2. The resulting child DNA array is an ordered mix of parent 1 and parent 2.
 
 * Mutation
 
@@ -62,6 +62,7 @@ Mutation is critical for persistent genetic variety which helps your algorithm a
 ### Worst Case Scenario Algorithm Analysis
 
 ## Files
+
 * agent.py
 
 This is the file that gives definition to the individual GA bots.
@@ -82,4 +83,16 @@ The file containing the core Genetic Algorithm components (Encoding, Selection, 
 
 A text file containing a copy of the streets utilized in the simulation
 
-## Works Cited 
+## Works Cited
+
+1. "Genetic Algorithms - Parent Selection," Tutorialspoint. N.p., n.d. Web 13 December 2020.
+
+2. Fisher, Jeremy. "Genetic Algorithms." YouTube, 11 July 2016, https://youtu.be/7J-DfS52bnl
+
+3. Fullstack Academy. "Genetic Algorithm Tutorial - How to Code a Genetic Algorithm." YouTube, 14 June 2017, https://www.youtube.com/watch?v=XP8R0yzAbdo&list=PL5dxL3XCtx5ao_lt20RfFmO5LidWVpKi3&index=2
+
+4. Craven, Paul Vincent. "Program Arcade Games With Python And Pygame." Program Arcade Games With Python And Pygame. N.p., n.d. Web 13 December 2020.
+
+5. PythonProgramming.net. "Pygame Buttons." Python Programming Tutorials. Web. 17 Dec. 2020, https://www.citationmachine.net/bibliographies/838def73-b912-4c65-9d4f-ba7194bc38d9.
+
+6. SmarakchopdarCheck out This Author's Contributed Articles., Smarakchopdar, and Check out This Author's Contributed Articles. "Find Closest Number in Array." GeeksforGeeks. 21 Jan. 2020. Web. 17 Dec. 2020.
