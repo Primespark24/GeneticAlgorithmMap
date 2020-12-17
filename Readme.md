@@ -63,11 +63,11 @@ Mutation is critical for persistent genetic variety which helps your algorithm a
 
 ## Files
 
-* agent.py
+* Agent.py
 
 This is the file that gives definition to the individual GA bots.
 
-* city.py
+* City.py
 
 This file defines our problem space.  Included is hard coded definitions of every intersection in a 6 square mile radius of North Spokane.
 
