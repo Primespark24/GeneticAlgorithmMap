@@ -22,21 +22,21 @@ In order to realistically simulate a delivery service within the scope of this p
 * If a road is disconnected by a small distance, we treat that situation as though the road stays connected.  The following pictorial example helps visualize this siutation:
   
         ___Rowan Ave_______                                     |
-                          
                            |                                    |
-                          
+                           |                                    |
+                           |                                    |
                            |                                Astor Ave
-                        
+                           |                                    |
                         Astor Ave                               |_____Rowan Ave_____                            
-                        
+                           |
                            |                                                        |
-                        
+                           |                                                        |
                            |___Rowan Ave_______                                     |
-                        
-                                                                                Astor Ave
-                        
                                                                                     |
-                        
+                                                                                Astor Ave
+                                                                                    |
+                                                                                    |
+                                                                                    |
                                                                                     |
 
 ## Algorithm Analysis
