@@ -1,7 +1,7 @@
 # Brycen Martin, Jonathan Laughlin and Shane Snediker
 # Dr. Jones CS473
 # Genetic Algorithm Final Project
-# Updated December 16, 2020
+# Updated December 17, 2020
 
 # City Class defines our problem space: a mini portion of Spokane
 
@@ -18,7 +18,7 @@ class City:
 
     # Initial bot grid parameters
     DELIVERY_LOC = [115, 13]         # The location where the bot is delivering
-    BEGIN_LOC = [1, 13]             # The location from which the bot is delivering
+    BEGIN_LOC = [1, 13]              # The location from which the bot is delivering
 
     # Default orientation is for agents to spawn in facing EAST
     # We use the unit circle for directional defintionf (0: E, 90: N, 180: W, 270: S)
@@ -31,81 +31,18 @@ class City:
     # Set the WIDTH and HEIGHT of the pop up screen
     CITY_SIZE = [1170, 360]
 
-    #########################################
-    # MEMBER FUNCTION
-    #########################################
-
-    # A function that takes 5 Boolean arguments (North, South, East, West, DoesExist). For N, S, E, & W
-    # the Boolean value signifies if the bot is able to traverse in that direction from this intersection.  
-    # DoesExist is a Boolean value that signfies whether or not the street exists at this intersection.  
-    # This is necessary because there are certain areas of our mini city where specific streets do not exist 
-    # and we need a way of communicating that information to our bot. 
-    def intersection (self, North, South, East, West, DoesExist):
-        self.North = North
-        self.South = South
-        self.East = East
-        self.West = West
-        self.DoesExist = DoesExist
-
-    #################### LIST OF CITY STREETS #########################################################
-
-    # All North/South streets west of Division street
-    NorthW = ['N Monroe St', 'N Lincoln St', 'N Post St', 'N Wall St', 'N Howard St', 'N Stevens St', 'N Washington St', 'N Whitehouse St', 'N Calispel St', 'N Normandie St', 'N Atlantic St', 'N Division St']
-    # All East/West streets west of Division street
-    WestE = ['W Francis Ave', 'W Dalke Ave', 'W Central Ave', 'W Columbia Ave', 'W Joseph Ave', 'W Nebraska Ave', 'W Rowan Ave', 'W Everett Ave', 'W Queen Ave', 'W Wabash Ave', 'W Wellesley Ave', 'W Princeton Ave', 'W Heroy Ave', 'W Longfellow Ave', 'W Rockwell Ave', 'W Lacrosse Ave', 'W Walton Ave', 'W Garland Ave', 'W Providence Ave', 'W Kiernan Ave', 'W Gordon Ave', 'W Glass Ave', 'W Cora Ave', 'W Alice Ave', 'W Dalton Ave', 'W Euclid Ave', 'W Park Pl', 'W Waverly Pl', 'W Cleveland Ave', 'W Buckeye Ave', 'W Chelan Ave', 'W York Ave', 'W Jackson Ave', 'W Carlisle Ave', 'W Montgomery Ave', 'W Mansfield Ave', 'W Knox Ave', 'W Shannon Ave', 'W Indiana Ave']
-
     ################## 2 DIMENSIONAL ARRAY HOLDING OUR CITY STREET DATA #######################################   
-    #              Monroe                                           Lincoln                                     Post                                         Wall                                       Howard                                      Stevens                                         Washington                                  Whitehouse                                      Calispel                                Normandie                                       Atlantic                                    Division
+    
     # HERE WE CREATE A 2 DIMENSIONAL ARRAY TO HOLD THE MINI CITY STREET INFORMATION
     # THIS WILL BE A LARGE AREA OF ARRAYS HOLDING ALL OF THE INTERSECTION DATA FROM 
     # OUR MINI CITY.  EACH ROW IN THE 2 DIMENSIONAL ARRAY CORRESPONDS WITH A WEST/EAST
     # STREET IN OUR MINI CITY, WHILE EACH COLUMN CORRESPONDS TO A NORTH/SOUTH STREET.
-    # OUR CITY WILL BE  WILL BE 700 UNITS IN THE X-DIRECTION AND 410 UNITS IN THE Y-DIRECTION
-    # WHILE THE FOLLOWING DEFINITION REPRESENTS THE FILLING OF EVERY CELL IN THE 700x410 MAZE,
+    # OUR CITY WILL BE  WILL BE 1170 UNITS IN THE X-DIRECTION AND 360 UNITS IN THE Y-DIRECTION
+    # WHILE THE FOLLOWING DEFINITION REPRESENTS THE FILLING OF EVERY CELL IN THE 1170X360 CITY,
     # WE SCALE THE GRID SO THAT EVERY GRID CELL LOCATION WILL BE A 10X10 PIXEL BLOCK
     # ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-    """CITY_GRID = [
-    [[False, True, True, False, True], [False, True, True, True, True], [False, True, True, True, True], [False, True, True, True, True], [False, True, True, True, True], [False, True, True, True, True], [False, True, True, True, True], [False, True, True, True, True], [False, True, True, True, True], [False, True, True, True, True], [False, True, True, True, True], [False, True, True, True, True]], 
-    [[True, True, True, False, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True]],
-    [[True, True, True, False, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, False, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, False, True, True, True], [True, False, True, True, True], [True, False, True, True, True], [True, True, True, True, True]], 
-    [[True, True, True, False, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [False, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [False, True, True, True, True], [False, False, True, True, False], [False, True, True, True, True], [True, True, False, True, True]], 
-    [[True, True, True, False, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, False, True, True, True], [False, True, True, True, True], [True, False, True, True, True], [True, True, False, True, True]],
-    [[True, True, True, False, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [False, False, True, True, False], [True, False, True, True, True], [False, False, True, True, False], [True, True, False, True, True]],
-    [[True, True, True, False, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, False, True, True], [False, False, False, False, False], [False, False, False, False, False], [False, False, False, False, False], [False, False, False, False, False]],
-    [[True, True, True, False, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, False, True, True], [False, False, False, False, False], [False, False, False, False, False], [False, False, False, False, False], [False, False, False, False, False]],  
-    [[True, True, True, False, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [False, True, True, True, True], [False, True, True, True, True], [False, True, True, True, True], [True, True, True, True, True]], # Queen
-    [[True, True, True, False, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, False, True, True, True], [True, True, False, True, True]], # Wabash
-    [[True, True, True, False, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, False, True, True, True], [False, True, True, True, True], [True, True, True, True, True]], # Wellesley
-    [[True, True, True, False, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, False, True, True], [False, False, False, False, False], [False, False, False, False, False], [False, False, False, False, False], [True, True, True, False, True]],   # Princeton
-    [[True, True, True, False, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, False, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [False, False, True, True, False], [True, True, False, True, True], [False, False, False, False, False]],   # Heroy
-    [[True, True, True, False, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [False, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [False, True, True, True, True], [False, True, True, True, True], [True, True, True, True, True], [True, True, False, True, True]],
-    [[True, True, True, False, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, False, True, True]],  # Rockwell
-    [[True, True, True, False, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, False, True, True, True], [True, True, False, True, True]],
-    [[True, True, True, False, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, False, True, True], [False, False, False, False, False], [False, False, False, False, False]],
-    [[True, True, True, False, True], [True, False, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, False, True, True, True], [True, True, True, True, True], [True, False, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [False, True, True, True, True], [True, True, True, True, True]],   # Garland
-    [[True, True, True, False, True], [False, False, True, True, False], [True, True, True, True, True], [True, False, True, True, True], [True, True, True, True, True], [False, False, True, True, False], [True, True, True, True, True], [False, False, True, True, False], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, False, True, True]],
-    [[True, True, True, False, True], [False, False, True, True, False], [True, True, True, True, True], [False, False, True, True, False], [True, True, True, True, True], [False, False, True, True, False], [True, True, False, True, True], [False, False, False, False, False], [False, False, False, False, False], [False, False, False, False, False], [False, False, False, False, False], [False, False, False, False, False]],
-    [[True, True, True, False, True], [False, False, True, True, False], [True, True, True, True, True], [False, False, True, True, False], [True, True, True, True, True], [False, False, True, True, False], [True, True, True, True, True], [False, False, True, True, False], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True]],        
-    [[False, False, False, False, False], [False, False, False, False, False], [True, True, True, False, True], [False, False, True, True, False], [True, False, True, True, True], [False, False, True, True, False], [True, False, True, True, True], [False, False, True, True, False], [True, False, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, False, True, True]],  # Glass
-    [[True, True, True, False, True], [False, True, True, True, True], [True, True, True, True, True], [False, False, True, True, False], [False, True, True, True, True], [False, True, True, True, True], [False, True, True, True, True], [False, False, True, True, False], [False, True, True, True, True], [False, True, True, True, True], [False, True, False, True, True], [False, False, False, False, False]],
-    [[True, True, True, False, True], [True, True, True, True, True], [True, True, True, True, True], [False, False, True, True, False], [True, True, True, True, True], [True, True, True, True, True], [False, True, False, True, True], [False, False, False, False, False], [False, False, False, False, False], [False, False, False, False, False], [False, False, False, False, False], [False, False, False, False, False]],  # Alice
-    [[True, True, True, False, True], [True, True, True, True, True], [True, True, True, True, True], [False, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [False, False, True, True, False], [True, True, True, True, True], [False, True, False, True, True], [False, False, False, False, False], [False, False, False, False, False]],  # Dalton
-    [[True, True, True, False, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, False, True, True, True], [True, True, True, True, True], [True, False, True, True, True], [False, False, True, True, False], [True, True, True, True, True], [True, True, True, True, True], [False, True, True, True, True], [True, True, True, True, True]],
-    [[False, False, False, False, False], [False, False, False, False, False], [True, True, True, False, True], [True, False, True, True, True], [False, False, True, True, False], [True, False, True, True, True], [False, False, True, True, False], [False, False, True, True, False], [True, False, True, True, True], [True, True, True, True, True], [True, True, False, True, True], [False, False, False, False, False]],
-    [[False, False, False, False, False], [False, False, False, False, False], [True, True, True, False, True], [False, True, True, True, True], [False, True, True, True, True], [False, False, True, True, False], [False, True, True, True, True], [False, False, True, True, False], [False, False, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [False, True, False, True, True]], # Waverly
-    [[True, True, True, False, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [False, False, True, True, False], [True, True, True, True, True], [False, False, True, True, False], [False, True, True, True, True], [True, False, True, True, True], [True, True, True, True, True], [False, True, False, True, True]],
-    [[False, False, False, False, False], [False, False, False, False, False], [True, True, True, False, True], [True, True, True, True, True], [True, True, True, True, True], [False, True, True, True, True], [True, True, True, True, True], [False, False, True, True, False], [True, True, True, True, True], [False, True, True, True, True], [True, True, True, True, True], [False, True, True, True, True]],  # Buckeye
-    [[True, True, True, False, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, False, True, True], [False, False, False, False, False], [False, False, False, False, False], [False, False, False, False, False], [False, False, False, False, False], [False, False, False, False, False], [False, False, False, False, False], [False, False, False, False, False], [False, False, False, False, False]],
-    [[True, True, True, False, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [False, False, True, True, False], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [False, True, False, True, True]],  # York
-    [[True, True, True, False, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [False, False, True, True, False], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [False, True, False, True, True]],
-    [[True, True, True, False, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [False, False, True, True, False], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [False, True, False, True, True]],
-    [[True, True, True, False, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [False, False, True, True, False], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [False, True, False, True, True]],
-    [[True, True, True, False, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [False, False, True, True, False], [True, True, True, True, True], [True, False, True, True, True], [True, True, True, True, True], [False, True, False, True, True]], # Mansfield
-    [[True, True, True, False, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [False, False, True, True, False], [True, True, True, True, True], [False, True, True, True, True], [True, True, True, True, True], [False, True, False, True, True]], # Knox
-    [[True, True, True, False, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [False, False, True, True, False], [True, True, True, True, True], [True, True, True, True, True], [True, True, True, True, True], [False, True, False, True, True]],  # Shannon
-    [[True, False, True, False, True], [True, False, True, True, True], [True, False, True, True, True], [True, False, True, True, True], [True, False, True, True, True], [True, False, True, True, True], [True, False, True, True, True], [False, False, True, True, False], [True, False, True, True, True], [True, False, True, True, True], [True, False, True, True, True], [True, False, True, True, True]]] # Indiana
-    """ 
-    #IF Northsouth on Division/only west
+    
+    #         Monroe                                 Lincoln                                Post                            Wall                             Howard                               Stevens                            Washington                             Whitehouse                           Calispel                            Normandie                             Atlantic                            Division
     CITY_GRID = [
     [[False, True, True, False, True],    [False, True, True, True, True],     [False, True, True, True, True], [False, True, True, True, True],   [False, True, True, True, True],     [False, True, True, True, True],     [False, True, True, True, True],     [False, True, True, True, True],     [False, True, True, True, True],     [False, True, True, True, True],     [False, True, True, True, True],     [False, True, False, True, True]], 
     [[True, True, True, False, True],     [True, True, True, True, True],      [True, True, True, True, True],  [True, True, True, True, True],    [True, True, True, True, True],      [True, True, True, True, True],      [True, True, True, True, True],      [True, True, True, True, True],      [True, True, True, True, True],      [True, True, True, True, True],      [True, True, True, True, True],      [True, True, False, True, True]],
@@ -115,37 +52,37 @@ class City:
     [[True, True, True, False, True],     [True, True, True, True, True],      [True, True, True, True, True],  [True, True, True, True, True],    [True, True, True, True, True],      [True, True, True, True, True],      [True, True, True, True, True],      [True, True, True, True, True],      [False, False, True, True, False],   [True, False, True, True, True],     [False, False, True, True, False],   [True, True, False, True, True]],
     [[True, True, True, False, True],     [True, True, True, True, True],      [True, True, True, True, True],  [True, True, True, True, True],    [True, True, True, True, True],      [True, True, True, True, True],      [True, True, True, True, True],      [True, True, False, True, True],     [False, False, False, False, False], [False, False, False, False, False], [False, False, False, False, False], [True, True, False, False, True]],
     [[True, True, True, False, True],     [True, True, True, True, True],      [True, True, True, True, True],  [True, True, True, True, True],    [True, True, True, True, True],      [True, True, True, True, True],      [True, True, True, True, True],      [True, True, False, True, True],     [False, False, False, False, False], [False, False, False, False, False], [False, False, False, False, False], [True, True, False, False, True]],  
-    [[True, True, True, False, True],     [True, True, True, True, True],      [True, True, True, True, True],  [True, True, True, True, True],    [True, True, True, True, True],      [True, True, True, True, True],      [True, True, True, True, True],      [True, True, True, True, True],      [False, True, True, True, True],     [False, True, True, True, True],     [False, True, True, True, True],     [True, True, False, True, True]], # Queen
-    [[True, True, True, False, True],     [True, True, True, True, True],      [True, True, True, True, True],  [True, True, True, True, True],    [True, True, True, True, True],      [True, True, True, True, True],      [True, True, True, True, True],      [True, True, True, True, True],      [True, True, True, True, True],      [True, True, True, True, True],      [True, False, True, True, True],     [True, True, False, True, True]], # Wabash
-    [[True, True, True, False, True],     [True, True, True, True, True],      [True, True, True, True, True],  [True, True, True, True, True],    [True, True, True, True, True],      [True, True, True, True, True],      [True, True, True, True, True],      [True, True, True, True, True],      [True, True, True, True, True],      [True, False, True, True, True],     [False, True, True, True, True],     [True, True, False, True, True]], # Wellesley
-    [[True, True, True, False, True],     [True, True, True, True, True],      [True, True, True, True, True],  [True, True, True, True, True],    [True, True, True, True, True],      [True, True, True, True, True],      [True, True, True, True, True],      [True, True, False, True, True],     [False, False, False, False, False], [False, False, False, False, False], [False, False, False, False, False], [True, True, False, True, True]],   # Princeton
-    [[True, True, True, False, True],     [True, True, True, True, True],      [True, True, True, True, True],  [True, True, True, True, True],    [True, False, True, True, True],     [True, True, True, True, True],      [True, True, True, True, True],      [True, True, True, True, True],      [True, True, True, True, True],      [False, False, True, True, False],   [True, True, False, True, True],     [True, True, False, False, True]],   # Heroy
+    [[True, True, True, False, True],     [True, True, True, True, True],      [True, True, True, True, True],  [True, True, True, True, True],    [True, True, True, True, True],      [True, True, True, True, True],      [True, True, True, True, True],      [True, True, True, True, True],      [False, True, True, True, True],     [False, True, True, True, True],     [False, True, True, True, True],     [True, True, False, True, True]],      # Queen
+    [[True, True, True, False, True],     [True, True, True, True, True],      [True, True, True, True, True],  [True, True, True, True, True],    [True, True, True, True, True],      [True, True, True, True, True],      [True, True, True, True, True],      [True, True, True, True, True],      [True, True, True, True, True],      [True, True, True, True, True],      [True, False, True, True, True],     [True, True, False, True, True]],      # Wabash
+    [[True, True, True, False, True],     [True, True, True, True, True],      [True, True, True, True, True],  [True, True, True, True, True],    [True, True, True, True, True],      [True, True, True, True, True],      [True, True, True, True, True],      [True, True, True, True, True],      [True, True, True, True, True],      [True, False, True, True, True],     [False, True, True, True, True],     [True, True, False, True, True]],      # Wellesley
+    [[True, True, True, False, True],     [True, True, True, True, True],      [True, True, True, True, True],  [True, True, True, True, True],    [True, True, True, True, True],      [True, True, True, True, True],      [True, True, True, True, True],      [True, True, False, True, True],     [False, False, False, False, False], [False, False, False, False, False], [False, False, False, False, False], [True, True, False, True, True]],      # Princeton
+    [[True, True, True, False, True],     [True, True, True, True, True],      [True, True, True, True, True],  [True, True, True, True, True],    [True, False, True, True, True],     [True, True, True, True, True],      [True, True, True, True, True],      [True, True, True, True, True],      [True, True, True, True, True],      [False, False, True, True, False],   [True, True, False, True, True],     [True, True, False, False, True]],     # Heroy
     [[True, True, True, False, True],     [True, True, True, True, True],      [True, True, True, True, True],  [True, True, True, True, True],    [False, True, True, True, True],     [True, True, True, True, True],      [True, True, True, True, True],      [True, True, True, True, True],      [False, True, True, True, True],     [False, True, True, True, True],     [True, True, True, True, True],      [True, True, False, True, True]],
-    [[True, True, True, False, True],     [True, True, True, True, True],      [True, True, True, True, True],  [True, True, True, True, True],    [True, True, True, True, True],      [True, True, True, True, True],      [True, True, True, True, True],      [True, True, True, True, True],      [True, True, True, True, True],      [True, True, True, True, True],      [True, True, True, True, True],      [True, True, False, True, True]],  # Rockwell
+    [[True, True, True, False, True],     [True, True, True, True, True],      [True, True, True, True, True],  [True, True, True, True, True],    [True, True, True, True, True],      [True, True, True, True, True],      [True, True, True, True, True],      [True, True, True, True, True],      [True, True, True, True, True],      [True, True, True, True, True],      [True, True, True, True, True],      [True, True, False, True, True]],      # Rockwell
     [[True, True, True, False, True],     [True, True, True, True, True],      [True, True, True, True, True],  [True, True, True, True, True],    [True, True, True, True, True],      [True, True, True, True, True],      [True, True, True, True, True],      [True, True, True, True, True],      [True, True, True, True, True],      [True, True, True, True, True],      [True, False, True, True, True],     [True, True, False, True, True]],
     [[True, True, True, False, True],     [True, True, True, True, True],      [True, True, True, True, True],  [True, True, True, True, True],    [True, True, True, True, True],      [True, True, True, True, True],      [True, True, True, True, True],      [True, True, True, True, True],      [True, True, True, True, True],      [True, True, False, True, True],     [False, False, False, False, False], [True, True, False, False, True]],
-    [[True, True, True, False, True],     [True, False, True, True, True],     [True, True, True, True, True],  [True, True, True, True, True],    [True, True, True, True, True],      [True, False, True, True, True],     [True, True, True, True, True],      [True, False, True, True, True],     [True, True, True, True, True],      [True, True, True, True, True],      [False, True, True, True, True],     [True, True, False, True, True]],   # Garland
+    [[True, True, True, False, True],     [True, False, True, True, True],     [True, True, True, True, True],  [True, True, True, True, True],    [True, True, True, True, True],      [True, False, True, True, True],     [True, True, True, True, True],      [True, False, True, True, True],     [True, True, True, True, True],      [True, True, True, True, True],      [False, True, True, True, True],     [True, True, False, True, True]],      # Garland
     [[True, True, True, False, True],     [False, False, True, True, False],   [True, True, True, True, True],  [True, False, True, True, True],   [True, True, True, True, True],      [False, False, True, True, False],   [True, True, True, True, True],      [False, False, True, True, False],   [True, True, True, True, True],      [True, True, True, True, True],      [True, True, True, True, True],      [True, True, False, True, True]],
     [[True, True, True, False, True],     [False, False, True, True, False],   [True, True, True, True, True],  [False, False, True, True, False], [True, True, True, True, True],      [False, False, True, True, False],   [True, True, False, True, True],     [False, False, False, False, False], [False, False, False, False, False], [False, False, False, False, False], [False, False, False, False, False], [True, True, False, False, True]],
     [[True, True, True, False, True],     [False, False, True, True, False],   [True, True, True, True, True],  [False, False, True, True, False], [True, True, True, True, True],      [False, False, True, True, False],   [True, True, True, True, True],      [False, False, True, True, False],   [True, True, True, True, True],      [True, True, True, True, True],      [True, True, True, True, True],      [True, True, False, True, True]],        
-    [[False, False, False, False, False], [False, False, False, False, False], [True, True, True, False, True], [False, False, True, True, False], [True, False, True, True, True],     [False, False, True, True, False],   [True, False, True, True, True],     [False, False, True, True, False],   [True, False, True, True, True],     [True, True, True, True, True],      [True, True, True, True, True],      [True, True, False, True, True]],  # Glass
+    [[False, False, False, False, False], [False, False, False, False, False], [True, True, True, False, True], [False, False, True, True, False], [True, False, True, True, True],     [False, False, True, True, False],   [True, False, True, True, True],     [False, False, True, True, False],   [True, False, True, True, True],     [True, True, True, True, True],      [True, True, True, True, True],      [True, True, False, True, True]],      # Glass
     [[True, True, True, False, True],     [False, True, True, True, True],     [True, True, True, True, True],  [False, False, True, True, False], [False, True, True, True, True],     [False, True, True, True, True],     [False, True, True, True, True],     [False, False, True, True, False],   [False, True, True, True, True],     [False, True, True, True, True],     [False, True, False, True, True],    [True, True, False, False, True]],
-    [[True, True, True, False, True],     [True, True, True, True, True],      [True, True, True, True, True],  [False, False, True, True, False], [True, True, True, True, True],      [True, True, True, True, True],      [False, True, False, True, True],    [False, False, False, False, False], [False, False, False, False, False], [False, False, False, False, False], [False, False, False, False, False], [True, True, False, False, True]],  # Alice
-    [[True, True, True, False, True],     [True, True, True, True, True],      [True, True, True, True, True],  [False, True, True, True, True],   [True, True, True, True, True],      [True, True, True, True, True],      [True, True, True, True, True],      [False, False, True, True, False],   [True, True, True, True, True],      [False, True, False, True, True],    [False, False, False, False, False], [True, True, False, False, True]],  # Dalton
+    [[True, True, True, False, True],     [True, True, True, True, True],      [True, True, True, True, True],  [False, False, True, True, False], [True, True, True, True, True],      [True, True, True, True, True],      [False, True, False, True, True],    [False, False, False, False, False], [False, False, False, False, False], [False, False, False, False, False], [False, False, False, False, False], [True, True, False, False, True]],     # Alice
+    [[True, True, True, False, True],     [True, True, True, True, True],      [True, True, True, True, True],  [False, True, True, True, True],   [True, True, True, True, True],      [True, True, True, True, True],      [True, True, True, True, True],      [False, False, True, True, False],   [True, True, True, True, True],      [False, True, False, True, True],    [False, False, False, False, False], [True, True, False, False, True]],     # Dalton
     [[True, True, True, False, True],     [True, True, True, True, True],      [True, True, True, True, True],  [True, True, True, True, True],    [True, False, True, True, True],     [True, True, True, True, True],      [True, False, True, True, True],     [False, False, True, True, False],   [True, True, True, True, True],      [True, True, True, True, True],      [False, True, True, True, True],     [True, True, False, True, True]],
     [[False, False, False, False, False], [False, False, False, False, False], [True, True, True, False, True], [True, False, True, True, True],   [False, False, True, True, False],   [True, False, True, True, True],     [False, False, True, True, False],   [False, False, True, True, False],   [True, False, True, True, True],     [True, True, True, True, True],      [True, True, False, True, True],     [True, True, False, False, True]],
-    [[False, False, False, False, False], [False, False, False, False, False], [True, True, True, False, True], [False, True, True, True, True],   [False, True, True, True, True],     [False, False, True, True, False],   [False, True, True, True, True],     [False, False, True, True, False],   [False, False, True, True, True],    [True, True, True, True, True],      [True, True, True, True, True],      [True, True, False, True, True]], # Waverly
+    [[False, False, False, False, False], [False, False, False, False, False], [True, True, True, False, True], [False, True, True, True, True],   [False, True, True, True, True],     [False, False, True, True, False],   [False, True, True, True, True],     [False, False, True, True, False],   [False, False, True, True, True],    [True, True, True, True, True],      [True, True, True, True, True],      [True, True, False, True, True]],      # Waverly
     [[True, True, True, False, True],     [True, True, True, True, True],      [True, True, True, True, True],  [True, True, True, True, True],    [True, True, True, True, True],      [False, False, True, True, False],   [True, True, True, True, True],      [False, False, True, True, False],   [False, True, True, True, True],     [True, False, True, True, True],     [True, True, True, True, True],      [True, True, False, True, True]],
-    [[False, False, False, False, False], [False, False, False, False, False], [True, True, True, False, True], [True, True, True, True, True],    [True, True, True, True, True],      [False, True, True, True, True],     [True, True, True, True, True],      [False, False, True, True, False],   [True, True, True, True, True],      [False, True, True, True, True],     [True, True, True, True, True],      [True, True, False, True, True]],  # Buckeye
+    [[False, False, False, False, False], [False, False, False, False, False], [True, True, True, False, True], [True, True, True, True, True],    [True, True, True, True, True],      [False, True, True, True, True],     [True, True, True, True, True],      [False, False, True, True, False],   [True, True, True, True, True],      [False, True, True, True, True],     [True, True, True, True, True],      [True, True, False, True, True]],      # Buckeye
     [[True, True, True, False, True],     [True, True, True, True, True],      [True, True, True, True, True],  [True, True, False, True, True],   [False, False, False, False, False], [False, False, False, False, False], [False, False, False, False, False], [False, False, False, False, False], [False, False, False, False, False], [False, False, False, False, False], [False, False, False, False, False], [True, True, False, False, True]],
-    [[True, True, True, False, True],     [True, True, True, True, True],      [True, True, True, True, True],  [True, True, True, True, True],    [True, True, True, True, True],      [True, True, True, True, True],      [True, True, True, True, True],      [False, False, True, True, False],   [True, True, True, True, True],      [True, True, True, True, True],      [True, True, True, True, True],      [True, True, False, True, True]],  # York
+    [[True, True, True, False, True],     [True, True, True, True, True],      [True, True, True, True, True],  [True, True, True, True, True],    [True, True, True, True, True],      [True, True, True, True, True],      [True, True, True, True, True],      [False, False, True, True, False],   [True, True, True, True, True],      [True, True, True, True, True],      [True, True, True, True, True],      [True, True, False, True, True]],      # York
     [[True, True, True, False, True],     [True, True, True, True, True],      [True, True, True, True, True],  [True, True, True, True, True],    [True, True, True, True, True],      [True, True, True, True, True],      [True, True, True, True, True],      [False, False, True, True, False],   [True, True, True, True, True],      [True, True, True, True, True],      [True, True, True, True, True],      [True, True, False, True, True]],
     [[True, True, True, False, True],     [True, True, True, True, True],      [True, True, True, True, True],  [True, True, True, True, True],    [True, True, True, True, True],      [True, True, True, True, True],      [True, True, True, True, True],      [False, False, True, True, False],   [True, True, True, True, True],      [True, True, True, True, True],      [True, True, True, True, True],      [True, True, False, True, True]],
     [[True, True, True, False, True],     [True, True, True, True, True],      [True, True, True, True, True],  [True, True, True, True, True],    [True, True, True, True, True],      [True, True, True, True, True],      [True, True, True, True, True],      [False, False, True, True, False],   [True, True, True, True, True],      [True, True, True, True, True],      [True, True, True, True, True],      [True, True, False, True, True]],
-    [[True, True, True, False, True],     [True, True, True, True, True],      [True, True, True, True, True],  [True, True, True, True, True],    [True, True, True, True, True],      [True, True, True, True, True],      [True, True, True, True, True],      [False, False, True, True, False],   [True, True, True, True, True],      [True, False, True, True, True],     [True, True, True, True, True],      [True, True, False, True, True]], # Mansfield
-    [[True, True, True, False, True],     [True, True, True, True, True],      [True, True, True, True, True],  [True, True, True, True, True],    [True, True, True, True, True],      [True, True, True, True, True],      [True, True, True, True, True],      [False, False, True, True, False],   [True, True, True, True, True],      [False, True, True, True, True],     [True, True, True, True, True],      [True, True, False, True, True]], # Knox
-    [[True, True, True, False, True],     [True, True, True, True, True],      [True, True, True, True, True],  [True, True, True, True, True],    [True, True, True, True, True],      [True, True, True, True, True],      [True, True, True, True, True],      [False, False, True, True, False],   [True, True, True, True, True],      [True, True, True, True, True],      [True, True, True, True, True],      [True, True, False, True, True]],  # Shannon
-    [[True, False, True, False, True],    [True, False, True, True, True],     [True, False, True, True, True], [True, False, True, True, True],   [True, False, True, True, True],     [True, False, True, True, True],     [True, False, True, True, True],     [False, False, True, True, False],   [True, False, True, True, True],     [True, False, True, True, True],     [True, False, True, True, True],     [True, False, False, True, True]]] # Indiana
+    [[True, True, True, False, True],     [True, True, True, True, True],      [True, True, True, True, True],  [True, True, True, True, True],    [True, True, True, True, True],      [True, True, True, True, True],      [True, True, True, True, True],      [False, False, True, True, False],   [True, True, True, True, True],      [True, False, True, True, True],     [True, True, True, True, True],      [True, True, False, True, True]],      # Mansfield
+    [[True, True, True, False, True],     [True, True, True, True, True],      [True, True, True, True, True],  [True, True, True, True, True],    [True, True, True, True, True],      [True, True, True, True, True],      [True, True, True, True, True],      [False, False, True, True, False],   [True, True, True, True, True],      [False, True, True, True, True],     [True, True, True, True, True],      [True, True, False, True, True]],      # Knox
+    [[True, True, True, False, True],     [True, True, True, True, True],      [True, True, True, True, True],  [True, True, True, True, True],    [True, True, True, True, True],      [True, True, True, True, True],      [True, True, True, True, True],      [False, False, True, True, False],   [True, True, True, True, True],      [True, True, True, True, True],      [True, True, True, True, True],      [True, True, False, True, True]],      # Shannon
+    [[True, False, True, False, True],    [True, False, True, True, True],     [True, False, True, True, True], [True, False, True, True, True],   [True, False, True, True, True],     [True, False, True, True, True],     [True, False, True, True, True],     [False, False, True, True, False],   [True, False, True, True, True],     [True, False, True, True, True],     [True, False, True, True, True],     [True, False, False, True, True]]]     # Indiana
     
 
 
@@ -154,28 +91,12 @@ class City:
 #      THE MISCELLANEOUS DATA BELOW MAY GET WORKED BACK INTO OUR PROGRAM 
 
 
+#################### LIST OF WEST STREETS #########################################################
 
-################### CLASSES AND FUNCTIONS ###################
-# TODO: This function needs work
-
-#def PathGenerator(Sequence, Addresses, Location = [1,1,2]):
-    #UNSURE HOW TO HANDLE LOCATION
-#    Path = []
-#    for Direction in Sequence:
-#        if(Direction == 'L'):
-#            Path.append(Addresses[0])
-#    return Path
-
-
-# A class for representing the intersections of our mini city
-# _repr_ : Printing the details of the intersection
-#class intersection:
-    
-
-#    def __repr__(self):
-#        return "North:% s South:% s East:% s West:% s DoesExist:% s" % (self.North, self.South, self.East, self.West, self.DoesExist)
-
-
+    # All North/South streets west of Division street
+    #NorthW = ['N Monroe St', 'N Lincoln St', 'N Post St', 'N Wall St', 'N Howard St', 'N Stevens St', 'N Washington St', 'N Whitehouse St', 'N Calispel St', 'N Normandie St', 'N Atlantic St', 'N Division St']
+    # All East/West streets west of Division street
+    #WestE = ['W Francis Ave', 'W Dalke Ave', 'W Central Ave', 'W Columbia Ave', 'W Joseph Ave', 'W Nebraska Ave', 'W Rowan Ave', 'W Everett Ave', 'W Queen Ave', 'W Wabash Ave', 'W Wellesley Ave', 'W Princeton Ave', 'W Heroy Ave', 'W Longfellow Ave', 'W Rockwell Ave', 'W Lacrosse Ave', 'W Walton Ave', 'W Garland Ave', 'W Providence Ave', 'W Kiernan Ave', 'W Gordon Ave', 'W Glass Ave', 'W Cora Ave', 'W Alice Ave', 'W Dalton Ave', 'W Euclid Ave', 'W Park Pl', 'W Waverly Pl', 'W Cleveland Ave', 'W Buckeye Ave', 'W Chelan Ave', 'W York Ave', 'W Jackson Ave', 'W Carlisle Ave', 'W Montgomery Ave', 'W Mansfield Ave', 'W Knox Ave', 'W Shannon Ave', 'W Indiana Ave']
 
 ################### LIST OF EAST STREETS ########################################################
 
@@ -239,100 +160,36 @@ class City:
 #[[False,True,True,True,True], [True,False,True,True,True], [False,False,True,True,False], [True,False,True,True,True], [True,False,True,True,True], [True,False,True, True,True], [False,False,True,True,False], [True,False,True,True,True], [True,False,True,True,True], [True,False,True,True,True], [True,False,True,True,True], [False,False,True,True,False], [True,False,True,True,True], [True,False,True,True,True], [True,False,True,True,True], [False,False,True,True,False], [False, False, True, True, False], [False, False, False, False, False], [False, False, False, False, False], [False, False, False, False, False], [False, False, False, False, False], [False,False,False,False,False]]],                                # Indiana
 
 
-"""
+
 # Geocoding an address
-geocode_result = gmaps.geocode('1600 Amphitheatre Parkway, Mountain View, CA')
+#geocode_result = gmaps.geocode('1600 Amphitheatre Parkway, Mountain View, CA')
 
 # Look up an address with reverse geocoding
-reverse_geocode_result = gmaps.reverse_geocode((40.714224, -73.961452))
-directions = gmaps.distance_matrix('N Ruby St E Ermina Ave, Spokane, WA', 'N Ruby St E Baldwin, Spokane, WA') #directions('N Ruby St E Ermina Ave, Spokane, WA', 'N Ruby St E Baldwin, Spokane, WA')
-print(directions)  
+#reverse_geocode_result = gmaps.reverse_geocode((40.714224, -73.961452))
+#directions = gmaps.distance_matrix('N Ruby St E Ermina Ave, Spokane, WA', 'N Ruby St E Baldwin, Spokane, WA') #directions('N Ruby St E Ermina Ave, Spokane, WA', 'N Ruby St E Baldwin, Spokane, WA')
+#print(directions)  
 
-print("done")
-directions = directions[0]
-i=1
-for leg in directions['legs']:
-    startAddress = leg['start_address']
-    print("Start Address:", startAddress)
-    endAddress = leg['end_address']
-    distance = leg['distance']['text']
-    print("End Address:", endAddress)
-    print("Distance:", distance)
-    for step in leg['steps']:
-        html_instructions = step['html_instructions']
-        html_instructions = html_instructions.split('<b>')
-        html_instructions2 = ''
-        for each in html_instructions:
-            if(each != '<b>'):
-                html_instructions2 += each
-        html_instructions2 = html_instructions2.split('</b>')
-        html_instructions3 = ''
-        for each in html_instructions2:
-            if(each != '<b\>'):
-                html_instructions3 += each
-        print("STEP {} {}".format(i ,html_instructions3))
-        i = i+1
-"""
-
-
-"""
-    south=right
-    north=left
-    east = down
-    west = up
-
-    south 1 
-
-    [0][0][1]                           (10,20)
-    [(1,0),(1,2),(2,1),(0,1),(1,1)]
-    [1][0][0]
-                                        (20,20)
-    [(1,3),(1,5),(2,4),(0,4),(1,4)]
-
-    east 1 from center intersection
-    n = row
-    k = intersection
-
-    [n][k][4]->[n][k][2]  (10,10)->(10,20)     
-
-    east 1 
-    [n][k][2]->[n][k+1][3]
-
-    east 1
-    [n][k+1][3]->[n][k+1][4]
-
-    east 1
-    [n][k+1][4]-->[n][k+1][2]
-    
-
-
-    UDDDDRRRR
-
-    if(next position is valid)
-        move to next position
-    else
-        do nothing #maybe subtract from fitness score
-    
-    if(next sequence is U)
-        if current position on intersection = 2
-            check if [n][k-1][currentPOS+1] is valid
-                if valid 
-                    next position -> [n][k-1][currentPOS+1]
-                    currentPOS+=1
-                else
-                    next position -> current position
-        
-
-
-    city_graph positions move east 4 times ie move down 4 on the printed map
-    [n][k][4]->[n][k][2]->[n][k+1][3]->[n][k+1][4]->[n][k+1][2]
-
-    (10,10)->(10,20)->(10,30)->(10,40)->(10,50)
-
-
-    city graph postiions move south 4 times ie move right 4 on printed graph
-    [n][k][4]->[n][k][1]->[n+1][k][0]->[n+1][k][4]->[n+1][k][1]
-
-    (10,10)->(20,10)->(30,10)->(40,10)->(50,10)
-
-"""
+#print("done")
+#directions = directions[0]
+#i=1
+#for leg in directions['legs']:
+#    startAddress = leg['start_address']
+#    print("Start Address:", startAddress)
+#    endAddress = leg['end_address']
+#    distance = leg['distance']['text']
+#    print("End Address:", endAddress)
+#    print("Distance:", distance)
+#    for step in leg['steps']:
+#        html_instructions = step['html_instructions']
+#        html_instructions = html_instructions.split('<b>')
+#        html_instructions2 = ''
+#        for each in html_instructions:
+#            if(each != '<b>'):
+#                html_instructions2 += each
+#        html_instructions2 = html_instructions2.split('</b>')
+#        html_instructions3 = ''
+#        for each in html_instructions2:
+#            if(each != '<b\>'):
+#                html_instructions3 += each
+#        print("STEP {} {}".format(i ,html_instructions3))
+#        i = i+1

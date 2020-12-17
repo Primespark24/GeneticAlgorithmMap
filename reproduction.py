@@ -1,7 +1,7 @@
 # Brycen Martin, Jonathan Laughlin and Shane Snediker
 # Dr. Jones CS473
 # Genetic Algorithm Final Project
-# Updated December 14, 2020
+# Updated December 17, 2020
 
 
 import City         # Import user defined class that provides graphical city data
@@ -102,9 +102,6 @@ class Reproduction:
         screen.blit(gen_title_text, gen_title_Rect) 
         screen.blit(ave_title_text, ave_title_Rect)
         screen.blit(top_score_title_text, top_score_title_Rect)
-
-    
-    ### HERE IS WHERE WE NEED TO TRY TO INCORPORATE MORE DELIVERY LOCATIONS INTO THE PROGRAM
     
     # Function for resetting the population at the city entrance
     # Once a population has completed a generation of movement, reset them to the beginning of the city
@@ -138,21 +135,23 @@ class Reproduction:
 
         # Recursively generate boundaries between 0 and 1 that split up the number space into probabilites for each agent
         # This way each agent will have certain probability to reproduce with those who have a higher fitness getting a larger chance to mate
+        # Begin index zero with a value of 0
         selection_boundaries = [0]
-        # Iterate through the population adding an increasing sized float values to each index based on the fitness values with higher fitness values getting assigned a bigger chunk of the pie
+        # Iterate through the population adding an increasing sized float value to each index based on the agents with higher fitness values getting assigned a bigger chunk of the pie
         ## The -1 in the for loop is for the last element whose total rounds to 1 which is added after the loop is completed
         for i in range(len(self.Agent_quiver) - 1):
             # add the previous fitness proportion to the current fitness proportion to get a new boundary
+            # What we're really doing here is wieghting each agent's selection probability according to its fitness score
             selection_boundaries.append(selection_boundaries[i] + ((self.Agent_quiver[i].fitness_score)/sum))
         selection_boundaries.append(1)
 
         # Now we have n boundaries (dividing lines) between 0 and 1 where n = the number of agents
         # The number line between 0 and 1 is split into n different sections in between boundaries corresponding to the probability of selection
-        # Now a random number is chosen between 0 and 1 to see which parents get selected
+        # Now a random float value is chosen between 0 and 1 to see which parents get selected
        
         # List holding the indices that point to selected parents from the original population 
         parent_indices = []
-        # Variable used to prevent an agent from mating with itself
+        # Flag used to prevent an agent from mating with itself
         previously_selected_parent = None
         x = 0
         # Begin a loop that will traverse the population
@@ -181,18 +180,12 @@ class Reproduction:
     # This method removes the least fit agents from the population based on number_of_survivors member variable
     # This method is called each time new children have been created to create room in the population for the children to replace
     def kill_the_weak(self):
-        # Begin by aligning the population of agents from the fittest to the weakest (Fitter agents have higher scores)
-        #ordered_agents = sorted(self.Agent_quiver, key = attrgetter('fitness_score'), reverse = True)
-        # Now we kill a portion of the population
         # Let's initialize an array to hold the survivors
         weak = []
         # Now we iterate through the list of fitness sorted agents saving the fittest portion
         for x in range((self.number_of_survivors)):
              weak.append(self.Agent_quiver[x])
-        # Copy over the fittest agents into the new quiver
-        # Now the agent quiver will be half the size as it was when this function was called 
-        # self.Agent_quiver = copy.deepcopy(Fittest)
-        # self.Agent_quiver = sorted(self.Agent_quiver, key = attrgetter('fitness_score'), reverse = False)
+        # Kill the weaklings
         for agent in range((self.number_of_survivors)):
             del self.Agent_quiver[agent]
 

@@ -1,7 +1,7 @@
 # Brycen Martin, Jonathan Laughlin and Shane Snediker
 # Dr. Jones CS473
 # Genetic Algorithm Final Project
-# Updated December 15, 2020
+# Updated December 17, 2020
 
 
 import random   # Used for randomly seeding DNA
@@ -9,22 +9,22 @@ import copy     # Used to create deep copies of variables
 import math     # Used to calculate distance
 
 # Agent class
-# This class contains all data pertaining to the individual agents that will be navigating our maze
+# This class contains all data pertaining to the individual agents that will be navigating the problem space
 class Agent:
 
     #########################################
     #### Class Attributes 
     #########################################
 
-    current_orientation = 0     # Specifies which direction the agent is facing, utilizing unit circle degrees
-    previous_position_map = [1,1]  # Store the agent's previous position to repaint black on the screen. In the form of [x,y]
-    current_position_map = [1,1]   # Variable holding the agent's current position, which will begin initialized to a random location in the city. In the form of [x,y]
-    previous_position_city = [0,4,4]  # Store the agent's previous position to repaint black on the screen. In the form of [x,y]
-    current_position_city = [0,4,4]   # Variable holding the agent's current position, which will begin initialized to a random location in the city. In the form of [x,y]
-    DNA_length = 500            # Variable representing the length of an agent's DNA structure
-    fitness_score = 0           # Stores the agents overall fitness score computed after the final movement
+    current_orientation = 0          # Specifies which direction the agent is facing, utilizing unit circle degrees
+    previous_position_map = [1,1]    # Store the agent's previous position to repaint gray on the screen. In the form of [x,y]
+    current_position_map = [1,1]     # Variable holding the agent's current position, which will begin initialized to a specific location in the city. In the form of [x,y]
+    previous_position_city = [0,4,4] # Store the agent's previous position in the Spokane street array. In the form of [row, column, intersection]
+    current_position_city = [0,4,4]  # Variable holding the agent's current position in the Spokane street array. In the form of [row, column, intersection]
+    DNA_length = 500                 # Variable representing the length of an agent's DNA structure
+    fitness_score = 0                # Stores the agent's overall fitness score computed after the final movement
     DNA_mutate_strand = (DNA_length // 10) # A holder variable that captures an integer value representing 10 percent of an agent's DNA
-    Deliv_reached = False
+    Deliv_reached = False            # Flag that captures the moment when an agent reaches the delivery location
 
     #########################################
     #### Class Methods 
@@ -48,10 +48,10 @@ class Agent:
         # This is the implementation that is used because when calling the constructor 
         # you do not include the DNA-array parameter
         if DNA_array == None:
-            # generate 500 random actions/movements to seed the first generation
+            # generate random actions/movements to seed the first generation
             for _ in range(self.DNA_length):
-                self.DNA.append(random.choice( ['L', 'F', 'R', 'B']))
-                #self.DNA.append('B')
+                self.DNA.append(random.choice(['N', 'S', 'E', 'W']))
+                #self.DNA.append(random.choice( ['L', 'F', 'R', 'B']))
         # Now we turn to the secondary implementaiton for agents which happens
         # during reproduction when a new child is born
         else:
@@ -69,40 +69,42 @@ class Agent:
         # Degrees updated based on unit circle orientation
 
         # If this turn is left, then we need to add 90 degrees to the agent's current orientation
-        if dir == 'L':
+        if dir == 'N':
             self.current_orientation += 90
         # If this turn is right, then we need to subtract 90 degrees from the agent's current orientation    
-        elif dir == 'R':
+        elif dir == 'S':
             self.current_orientation -= 90
-        elif dir == 'B':
+        elif dir == 'E':
             self.current_orientation -= 180
         # If the agent turned a full 360 degrees, reset to 0
         if self.current_orientation == 360 or self.current_orientation == -360:
             self.current_orientation = 0 
-
-
-    #south=right
-    #north=left
-    #east = down
-    #west = up
-    #current pos city [0][0][4]
-    # Calculates the next position if movement were to be carried out
+    
+    
+    # Calculates the next position if movement can be carried out
     # Parameter:  action: A char representing the agent's next directional movement
-    # Return:     next_pos: A list containing the next maze coordinates where the agent will move in the form of [x,y]
+    #             city: A City object that the bot is traversing
+    # Return:     next_pos_city: A list containing the coordinates within the Spokane street array where the bot will move next
+    #             next_pos_map: A list containing the coordinates within the popup screen where the bot will move next
+    #             changed_position: A boolean flag signifying whether or not the bot was permitted to make a move
     def calculate_next_pos(self, action, city):
-        #print(action)
         # Begin by setting next position variable equal to the agent's current position
-        # next_pos is an array with the first element tracking the x direction and the second element tracking the y direction
-        # So next_pos[0] adjustments move agent left and right, while next_pos[1] adjustments move agent up and down
-        # Start the next position at the current position and make modifications from there
+        # next_pos_city is an array with the first element tracking the EAST/WEST street that the bot is on, the second
+        # element tracking the NORTH/SOUTH street that the bot is on, and the 3rd element tracking the direction the bot is facing (N,S,E, or W).
+        # next_pos_map is a list corresponding to the popup screen where the first index corresponds to the bot's x coordinate and
+        # the second index corresponds to the bot's y coordinate. Start the agent at the current position and make modifications from there
         next_pos_map = copy.deepcopy(self.current_position_map)
-        #print(next_pos_map)
         next_pos_city = copy.deepcopy(self.current_position_city)
         changed_position = False
-        #print(next_pos_city)
-        # If the agent is currently facing up/north, determine its next position based on its current action
-        #if self.current_orientation == 90 or self.current_orientation == -270:
-        if action == 'F':#up in printed map
+
+        # This function basically tracks where the robot is at within the Spokane City street array and allows
+        # it to move if and only if there is an open street in the direction that it is wanting to move
+
+        # If the agent is currently facing WEST, determine its next position based on its next genetic sequence
+        # and whether westward movement is open
+        # NOTE: WEST is up on the printed screen
+        # Bot wants to go West, is that direction open?
+        if action == 'W':
             if(self.current_position_city[2] == 4):
                 if(city.CITY_GRID[self.current_position_city[0]][self.current_position_city[1]][3]):
                     next_pos_city[2] = 3
@@ -111,7 +113,6 @@ class Agent:
             elif(self.current_position_city[2] == 3):
                 if(city.CITY_GRID[self.current_position_city[0]][self.current_position_city[1]-1][2]):
                     next_pos_city[1] -= 1
-                    #if(next_pos_city[1] == -1):
                     next_pos_city[2] = 2
                     next_pos_map[1] -= 1
                     changed_position = True
@@ -120,10 +121,13 @@ class Agent:
                     next_pos_city[2] = 4 
                     next_pos_map[1] -= 1
                     changed_position = True
-        elif action == 'B':#move down on printed graph
+        # If the agent is currently facing EAST, determine its next position based on its next genetic sequence 
+        # and whether eastward movement is open
+        # NOTE: EAST is down on the printed screen
+        # Bot wants to go East, is that direction open?
+        elif action == 'E':
             if(self.current_position_city[2] == 4):
                 if(city.CITY_GRID[self.current_position_city[0]][self.current_position_city[1]][2] and self.current_position_city[1] != len(city.CITY_GRID[0])-1):
-                    #print("new intersection")
                     next_pos_city[2] = 2
                     next_pos_map[1] += 1
                     changed_position = True
@@ -138,53 +142,48 @@ class Agent:
                     next_pos_city[2] = 3 
                     next_pos_map[1] += 1
                     changed_position = True
-        elif action == 'L':#left in printed graph
-            #print('LEFT')
+        # If the agent is currently facing NORTH, determine its next position based on its next genetic sequence 
+        # and whether northward movement is open
+        # NOTE: NORTH is left on the printed screen
+        # Bot wants to go North, is that direction open?
+        elif action == 'N':
             if(self.current_position_city[2] == 4):
                 if(city.CITY_GRID[self.current_position_city[0]][self.current_position_city[1]][0]):
                     next_pos_city[2] = 0
                     next_pos_map[0] -= 1
-                    #print(next_pos_map)
                     changed_position = True
             elif(self.current_position_city[2] == 0):
                 if(city.CITY_GRID[self.current_position_city[0]-1][self.current_position_city[1]][1] and self.current_position_city[0] != 0):
                     next_pos_city[0] -= 1
                     next_pos_city[2] = 1
                     next_pos_map[0] -= 1
-                    #print(next_pos_map)
                     changed_position = True
             elif(self.current_position_city[2] == 1):
                 if(city.CITY_GRID[self.current_position_city[0]][self.current_position_city[1]][4]):
                     next_pos_city[2] = 4
                     next_pos_map[0] -= 1
-                    #print(next_pos_map)
                     changed_position = True
-        elif action == 'R':
+        # If the agent is currently facing SOUTH, determine its next position based on its next genetic sequence 
+        # and whether Southward movement is open
+        # NOTE: SOUTH is right on the printed screen
+        # Bot wants to go South, is that direction open?            
+        elif action == 'S':
             if(self.current_position_city[2] == 4):
-                #print("entered 4")
                 if(city.CITY_GRID[self.current_position_city[0]][self.current_position_city[1]][1]):
-                    #print(city.CITY_GRID[self.current_position_city[0]][self.current_position_city[1]][1])
                     next_pos_city[2] = 1
                     next_pos_map[0] += 1
                     changed_position = True
-                    #print(next_pos_city, next_pos_map)
             elif(self.current_position_city[2] == 1):
-                #print("entered 1")
                 if(city.CITY_GRID[self.current_position_city[0]+1][self.current_position_city[1]][0]):
-                    #print(city.CITY_GRID[self.current_position_city[0]+1][self.current_position_city[1]][0])
                     next_pos_city[0] += 1
                     next_pos_city[2] = 0
                     next_pos_map[0] += 1
                     changed_position = True
-                    #print(next_pos_city, next_pos_map)
             elif(self.current_position_city[2] == 0):
-                #print("entered 0")
                 if(city.CITY_GRID[self.current_position_city[0]][self.current_position_city[1]][4]):
-                    #print(city.CITY_GRID[self.current_position_city[0]][self.current_position_city[1]][4])
                     next_pos_city[2] = 4
                     next_pos_map[0] += 1
                     changed_position = True
-                    #print(next_pos_city, next_pos_map)
         return next_pos_city, next_pos_map, changed_position
 
     # Function that moves the agent to its next position if a wall is not present
@@ -199,34 +198,19 @@ class Agent:
         # Calculate the next position of this agent based on the DNA instruction
         if(not self.Deliv_reached):
             next_position_city,next_position_map,changed_position = self.calculate_next_pos(action,city)
-        #print(next_position_city,next_position_map)
         
-            # if agent makes it to exit, increase fitness score to incentivize getting there ASAP
+            # If agent makes it to exit, increase fitness score to incentivize getting there ASAP
             if (self.current_position_map[0] == city.DELIVERY_LOC[0] and self.current_position_map[1] == city.DELIVERY_LOC[1]) or (next_position_city[0] == city.DELIVERY_LOC[0] and next_position_city[1] == city.DELIVERY_LOC[1]):
-                # for every round of movement before the end of the DNA, add 5 points per "saved" action
+                # for every round of movement before the end of the DNA, add points per "saved" action
                 self.Deliv_reached = True
                 self.fitness_score += 50
-        
-        
-        ## THIS IS WHERE WE FIGURE OUT HOW TO CHANGE FROM THE ZEROES AND ONES OF A MAZE TO TRUE/FALSES OF OUR CITY
-        
-        
-        # Check to see if the next grid location contains an obstacle, if not blocked move there
-        #elif city.CITY_GRID[next_position_city[1]][next_position_city[0]][next_position_city[2]] == True:
-            # Set the flag to represent the agent's movement
-            #changed_position = True
-            # since movement has occured, change previous position to current and update current to the next position
+        # If the bot moved, update its positioning
         if(changed_position):
             self.previous_position_map = copy.deepcopy(self.current_position_map)
             self.current_position_map = copy.deepcopy(next_position_map)
             self.previous_position_city = copy.deepcopy(self.current_position_city)
             self.current_position_city = copy.deepcopy(next_position_city)
         
-        #if(not city.CITY_GRID[self.current_position_city[0]][self.current_position_city[1]][4]):
-
-
-        #print(self.previous_position_map,self.current_position_map, self.previous_position_city,self.current_position_city)
-
         # Regardless of if the agents changed positions, update its orientation accordingly
         self.turn(action)  
         # Return the flag status of this movement
@@ -253,7 +237,7 @@ class Agent:
 
         # First let's create a brand new random sequence of DNA instructions of size DNA_mutate_strand
         for _ in range(self.DNA_mutate_strand):
-            mutation_sequence.append(random.choice(['L', 'F', 'R', 'B']))
+            mutation_sequence.append(random.choice(['N', 'S', 'E', 'W']))
 
         # Now we replace the mutation strand of the agent with the new mutated values
         # We need our iterator to start at zero on account of array indices beginning at zero
@@ -270,16 +254,16 @@ class Agent:
     def print_DNA(self):
         print(self.DNA)
 
-    # Function that calculates an agent's fitness at the conclusion of a generation of maze navigating
+    # Function that calculates an agent's fitness at the conclusion of a generation of city navigating
     # Parameters:  city: 2D array that the agent is navigating
     def calculate_fitness(self, city):
         
         # Use the distance formula to calculate fitness.  Not necessary to calculate the square root,
-        # however because all that is necessary is a relative distance
+        # however because all that is needed is a relative distance
         distance = (abs(city.DELIVERY_LOC[1] - self.current_position_map[1])) + (abs(city.DELIVERY_LOC[0] - self.current_position_map[0]) )
-        #print("Loacation x: ",self.current_position_map[1], "y:", self.current_position_map[0])
+
         # To avoid getting caught by a local minimum situation, let's give a bonus to 
-        # agents that at least make it half way through the maze
+        # agents that at least make it half way to their delivery location
         half_distance = (abs(city.DELIVERY_LOC[1] - city.BEGIN_LOC[1])) + (abs(city.DELIVERY_LOC[0] - city.BEGIN_LOC[0]) // 2)
         if distance > half_distance:
            distance -= 5
@@ -290,86 +274,3 @@ class Agent:
         # calculation to invert the values so that shorter distances from the maze exit
         # are reflected with higher fitness scores
         self.fitness_score += (200 - distance)
-         
-"""
-# If the agent is currently facing down/south, determine its next position based on its current action
-elif self.current_orientation == 270 or self.current_orientation == -90:
-    if action == 'F':
-        next_pos[1] += 1
-    elif action == 'B':
-        next_pos[1] -= 1
-    elif action == 'L':
-        next_pos[0] += 1
-    elif action == 'R':
-        next_pos[0] -= 1
-# If the agent is currently facing right/east, determine its next position based on its current action
-elif self.current_orientation == 0 or self.current_orientation == -360 or self.current_orientation == 360:
-    if action == 'F':
-        next_pos[0] += 1
-    elif action == 'B':
-        next_pos[0] -= 1
-    elif action == 'L':
-        next_pos[1] -= 1
-    elif action == 'R':
-        next_pos[1] += 1
-# If the agent is currently facing left/west,determine its next position based on its current action
-elif self.current_orientation == 180 or self.current_orientation == -180:
-    if action == 'F':
-        next_pos[0] -= 1
-    elif action == 'B':
-        next_pos[0] += 1
-    elif action == 'L':
-        next_pos[1] += 1
-    elif action == 'R':
-        next_pos[1] -= 1
-# return the next position in the form [x,y]
-return next_pos
-def calculate_next_pos(self, action):
-    # Begin by setting next position variable equal to the agent's current position
-    # next_pos is an array with the first element tracking the x direction and the second element tracking the y direction
-    # So next_pos[0] adjustments move agent left and right, while next_pos[1] adjustments move agent up and down
-    # Start the next position at the current position and make modifications from there
-    next_pos = copy.deepcopy(self.current_position_map)
-    # If the agent is currently facing up/north, determine its next position based on its current action
-    if self.current_orientation == 90 or self.current_orientation == -270:
-        if action == 'F':
-            next_pos[1] -= 1
-        elif action == 'B':
-            next_pos[1] += 1
-        elif action == 'L':
-            next_pos[0] -= 1
-        elif action == 'R':
-            next_pos[0] += 1
-    # If the agent is currently facing down/south, determine its next position based on its current action
-    elif self.current_orientation == 270 or self.current_orientation == -90:
-        if action == 'F':
-            next_pos[1] += 1
-        elif action == 'B':
-            next_pos[1] -= 1
-        elif action == 'L':
-            next_pos[0] += 1
-        elif action == 'R':
-            next_pos[0] -= 1
-    # If the agent is currently facing right/east, determine its next position based on its current action
-    elif self.current_orientation == 0 or self.current_orientation == -360 or self.current_orientation == 360:
-        if action == 'F':
-            next_pos[0] += 1
-        elif action == 'B':
-            next_pos[0] -= 1
-        elif action == 'L':
-            next_pos[1] -= 1
-        elif action == 'R':
-            next_pos[1] += 1
-    # If the agent is currently facing left/west,determine its next position based on its current action
-    elif self.current_orientation == 180 or self.current_orientation == -180:
-        if action == 'F':
-            next_pos[0] -= 1
-        elif action == 'B':
-            next_pos[0] += 1
-        elif action == 'L':
-            next_pos[1] += 1
-        elif action == 'R':
-            next_pos[1] -= 1
-    # return the next position in the form [x,y]
-    return next_pos
-    """

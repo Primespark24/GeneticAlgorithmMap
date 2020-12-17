@@ -1,6 +1,8 @@
 # CS473 Genetic Algorithm Final Project
 Welcome to our Whitworth Advanced Algorithms and Analysis Final Project!  We created a genetic algorithm.  Genetic algorithms are loosely based on the principles of natural selection and evolution.  They have a unique ability to search problem spaces to calculate optimal solutions much faster than humans.  The problem space that we chose to define is the navigation of a small portion of the city streets in Spokane.  Our vision for this algorithm is to optimize the travel routes for a delivery service.  We set the genetic algorithm free upon the defined map of Spokane and allow it to calculate an optimized travel route given a set of input locations.
 
+To Run the program, open Main.py and run without debugging.  
+
 Authors: Brycen Martin, Jonathan Laughlin and Shane Snediker
 
 Updated: December 17, 2020
@@ -49,7 +51,7 @@ We initialize a seed population with an initial DNA consisting of completely ran
 
 * Selection
 
-A generation of agents expires when each agent has completed its full array of genetic instructions. We use a roulette style selection process based on probabilities. Every agent of a given population has a statistical chance to enter the reproductive process, with agents with higher fitness scores having a higher probability of getting selected. We order the agents by fitness score and delegate each agent a float value between 0 and 1 in ascending order with larger float values correlating to higher fitness scores. We then randomly generate float values between 0 and 1 which correlate to the agents that we are going to select for reproduction. This selection strategy favors higher fitness scores, but also doesn't completely eliminate lower fitness scores, which allows for more genetic variety being perpetuated throughout successive generations. We select half of the population to enter the crossover process.
+A generation of agents expires when each agent has completed its full array of genetic instructions. We use a roulette style selection process based on probabilities. Every agent of a given population has a statistical chance to enter the reproductive process, with agents with higher fitness scores having a higher probability of getting selected. We order the agents by fitness score and delegate each agent a float value between 0 and 1 in ascending order with larger float values correlating to higher fitness scores. We then randomly generate float values between 0 and 1 which correlate to the agents that we are going to select for reproduction. This selection strategy favors higher fitness scores, but also doesn't completely eliminate lower fitness scores, which allows for more genetic variety being perpetuated throughout successive generations. We select half of the population to enter the crossover process.  Therefore new generations of robots consist of 50% new babies and 50% of the agents with the highest fitness scores from the previous generation.
 
 * Crossover
 
@@ -65,19 +67,39 @@ Mutation is critical for persistent genetic variety which helps your algorithm a
 
 * Agent.py
 
-This is the file that gives definition to the individual GA bots.
+This is the file that defines our genetic algorithm robot class.  Integral to the definition of our bots is the constructor function.  Python doesn't allow for overloading constructors, so you have to account for each necessary object instance within one constructor.  The Agent constructor takes 3 arguments: a city object which connects the agent to the problem space, an integer value representing how many genetic instructions the agent will receive and an array of genes.  If the 3rd argument is left out of the constructor function call, this signifies a separate case of Agent creation in which a brand new agent is created and given a random sequence of genetic instructions.  The alternate Agent constructor call is utilized when the mating robots create a child with a specific gene sequence that gets passed into the constructor.
+
+The Agent file contains all of the functions that guide the bot's movements throughout the city array as well as an individualized mutation function.  The mutation function pulls a strand of DNA from the agent that is 10% of it's total DNA sequence, and replaces it with a new, randomized sequence of genes.
+
+Agent.py also contains the genetic algorithm's fitness function.  We used a distance formula function to assign fitness to individual agents.  At the conclusion of every generation of city traversal, we calculate individual bots' distance away from the delivery location by subtracting the array location where the robot ended up upon executing its full sequence of genetic instructions from the array location of the target delivery location.  Robots that end up closer to the delivery location earn a higher fitness score and any robot that makes it at least half way to the target earns a bonus score as well.
 
 * City.py
 
-This file defines our problem space.  Included is hard coded definitions of every intersection in a 6 square mile radius of North Spokane.
+This file defines our problem space.  Included is hard coded definitions of every intersection in a 6 square mile radius of North Spokane represented as Boolean array values (True if you a robot can traverse in that direction at that intersection, False if it cannot).
 
 * Main.py
 
-The main file that defines program operation.
+The main file that defines program operation.  We utilized the Pygame graphics library to create a graphical representation of our robots traversing the streets of Spokane.  Most of the functions in the main file use the Pygame paradigm to create graphics. However, the main program loop happens in this file as well.  The flow of the main program pseudo code is as follows:
+
+For as many generations as is preset:
+
+  * Instantiate a City object to give robots a design space to explore
+
+  * Instantiate a Reproduction object so that the robots can engage in traditional genetic algorithm operations like selection, crossover and mutation.
+
+  * Create a population of robots to search the problem space.
+
+  * Unleash the robots within the problem space to execute 1 generation of genetic instructions.
+
+  * Calculate fitness.
+
+  * Select reproductive parents
+
+  * Engage parents in crossover reproduction to add children to the next generation of bots.
 
 * Reproduction.py
   
-The file containing the core Genetic Algorithm components (Encoding, Selection, Crossover, Mutation, Fitness).
+The file containing the core Genetic Algorithm components (Selection, Crossover, Mutation, Fitness).  See above for more details regarding our implementation details for these GA categories.  A personal favorite function of ours was our selection function.  It assigns every agent within the array of agents a float value between 0 and 1.  The agents with the higher fitness scores receive a higher float value.  We then randomly generate a float value between 0 and 1 and use binary search to find the agent whose float value is closest to the randomly generated number and that agent gets chosen to pass its genes on to the next generation.
 
 * map.txt
 

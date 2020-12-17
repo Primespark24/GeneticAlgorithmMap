@@ -1,7 +1,7 @@
 # Brycen Martin, Jonathan Laughlin and Shane Snediker
 # Dr. Jones CS473
 # Genetic Algorithm Final Project
-# Updated December 14, 2020
+# Updated December 17, 2020
 
 
 import Agent        # import user defined agent class to represent City navigating bots
@@ -13,9 +13,9 @@ import os           # Allows us to control where the city window pops up on the 
 
 # Define our city colors
 BLACK = (0, 0, 0)          # Background color
-RED = (255, 0, 0)          # City street colors
+RED = (255, 0, 0)          # Robot color
 WHITE = (255, 255, 255)    # Agent test color
-BLUE = (50, 50, 255)       # Agent test color
+BLUE = (50, 50, 255)       # Delivery location color
 TEAL = (0, 128, 128)       # Stat counters
 GRAY = (169, 169, 169)     # Streets 
 
@@ -164,41 +164,6 @@ def draw_city(city):
             row+=1
             rowInc = 1
 
-"""
-def draw_city(city): 
-    # Draw the city one time before entering the game loop
-    # For every one of the 41 rows in the grid
-    for row in range(39):
-        # And every one of the 70 columns as well              
-        for column in range(12):
-            # Let's make the background black
-            color = BLACK
-            # Now we iterate through our 2 dimensional array and print street locations in red  
-
-            for value in range(5):
-                color = BLACK
-                if city.CITY_GRID[row][column][value] == True:
-                    color = BLUE
-
-                # The pygame draw.rect function takes 3 primary arguments:
-                # The first argument is the surface on which the rectangle will be drawn
-                # The second is the desired color of the rectangle
-                # The third is a tuple with the following values in this order:
-                # x coordinate, y coordinate, width of rectangle, Height of rectangle, and the thickness of the rectangle lines
-                # If no argument is given for the thickness parameter (like in our case), then the default is to fill the rectangle with the color argument
-                pygame.draw.rect(screen,
-                                color,
-                                # x coordinate is the product of the cell width and the current column 
-                                [city.CELL_SIZE * column*value,   
-                                # y coordinate is the product of the cell height and the current row     
-                                city.CELL_SIZE * row*value,     
-                                # rectangle width
-                                city.CELL_SIZE,             
-                                # rectangle height
-                                city.CELL_SIZE])
-    # Update the screen with what has been drawn
-    pygame.display.update()        
-"""
 # Function to move every agent in a population one time
 # Parameter:  pop: a population object representing the population of agents traversing the city
 #             a_divisor: divides amount of agents displayed by this number      (cuts down complexity for larger samples)
@@ -219,7 +184,7 @@ def move_population_once(pop,a_divisor = 1, dna_divisor = 1):
             if (Moved == True) and (actionNumber % dna_divisor == 0) and ((x == (pop.pop_size -1)) or (x % a_divisor == 0)):
                 # change the previous position to black
                 color = GRAY
-                # Peek line 60 for draw.rect() argument explanation
+                # Peek line 81 for draw.rect() argument explanation
                 pygame.draw.rect(screen, color, [pop.city.CELL_SIZE * pop.Agent_quiver[x].previous_position_map[0], pop.city.CELL_SIZE * pop.Agent_quiver[x].previous_position_map[1], pop.city.CELL_SIZE, pop.city.CELL_SIZE])
                 # update the new position to Red
                 color = RED
@@ -235,9 +200,8 @@ def move_population_once(pop,a_divisor = 1, dna_divisor = 1):
 # Function that resets the city erasing the previous generation of agents and placing the new generation at the beginning location
 # Parameter:  pop: a reproduction object representing a new generation of agents traversing the city
 def clear_screen(pop):
-    # Draw over all agents with black, clean the board
+    # Draw over all agents with Gray, clean the board
     for x in range(pop.pop_size):
-        # change the previous position to black
         color = GRAY
         pygame.draw.rect(screen, color, [pop.city.CELL_SIZE * pop.Agent_quiver[x].current_position_map[0], pop.city.CELL_SIZE * pop.Agent_quiver[x].current_position_map[1], pop.city.CELL_SIZE, pop.city.CELL_SIZE])
     # update what we've drawn
@@ -287,36 +251,13 @@ def game_intro():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
+        # Pygame button function args: 1: msg 2: x coordinate 3: y coordinate 4: width of button 
+        #                              5: height of button 6: IC (Inactive Color-Color of Button 
+        #                              when a mouse is not hovering over it) and 7: AC (Active
+        #                              color-Color of Button when a mouse is hovering over it)
         button("Start",545,420,80,50,WHITE,BLUE,game_loop)
         pygame.display.update()
 
-######### Highlight all the agents that are selected to get eaten ###########
-# A fun, miscellaneous function that highlights on the screen the agents with the lowest fitness at the end of a generation
-# Parameter:  pop: a Reproduction object representing a generation of agents traversing the city
-def highlight_weak(pop):
-    # Declare a variable that will capture the weakest agents from a generation of an agent population
-    weakest = pop.kill_the_weak()
-    # Let's paint them red to the screen
-    color = RED
-    for x in range(len(weakest)):
-        pygame.draw.rect(screen, color, [city_instance.CELL_SIZE * weakest[x].current_position[0], city_instance.CELL_SIZE * weakest[x].current_position[1], city_instance.CELL_SIZE, city_instance.CELL_SIZE])
-    # Update the screen with what has been drawn
-    pygame.display.update()
-    pygame.time.delay(3000)
-
-######## Highlight all the selected parents #######
-# Another miscellaneous function that highlights the fittest agents among a generation by painting them blue
-# Parameter:  pop: a population object representing a population of agents traversing the city
-def highlight_parents(pop):
-    # Capture selected parents
-    selected = copy.deepcopy(pop.selection())
-    # Paint them blue to the screen
-    color = WHITE
-    for x in range(len(selected)):
-        pygame.draw.rect(screen, color, [city_instance.CELL_SIZE * pop.Agent_quiver[selected[x]].current_position[0], city_instance.CELL_SIZE * pop.Agent_quiver[selected[x]].current_position[1], city_instance.CELL_SIZE, city_instance.CELL_SIZE])
-    # Update the screen with what has been drawn
-    pygame.display.update()
-    pygame.time.delay(3000)
 
 #------------------ Main object declarations and implementation begin here -------------------------------
 
@@ -396,7 +337,7 @@ def game_loop():
             ######################
             test_reproduction.calculate_fitness()
             test_reproduction.get_fitness_stats(screen)      
-            # highlight_parents(test_population)
+            
             #####################################################################
             ## Select Parents and Produce children through crossover and mutation
             #####################################################################
@@ -405,7 +346,6 @@ def game_loop():
             ##########################
             ## Kill the weakest agents
             ##########################
-            # highlight_weak(test_population)
             test_reproduction.kill_the_weak()
 
             #############################
@@ -417,7 +357,7 @@ def game_loop():
             test_reproduction.reset(screen)
             
             print("Current generation: " + str(test_reproduction.global_gen_counter))
-            print("Avg fitness: " + str(test_reproduction.average_fitness) + "Top Fitness: " + str(test_reproduction.top_score))
+            print("Avg fitness: " + str(test_reproduction.average_fitness) + "  " + "Top Fitness: " + str(test_reproduction.top_score))
         
     # --------  End of Main Program Loop -----------
 
