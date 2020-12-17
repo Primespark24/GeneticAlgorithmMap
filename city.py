@@ -1,7 +1,7 @@
 # Brycen Martin, Jonathan Laughlin and Shane Snediker
 # Dr. Jones CS473
 # Genetic Algorithm Final Project
-# Updated December 15, 2020
+# Updated December 16, 2020
 
 # City Class defines our problem space: a mini portion of Spokane
 
