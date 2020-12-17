@@ -63,6 +63,17 @@ Mutation is critical for persistent genetic variety which helps your algorithm a
 
 ### Worst Case Scenario Algorithm Analysis
 
+A Genetic Algorithm is a very complex piece of code that is almost impossible to find a worst-case analysis to or any analysis for that matter since the number of things that tie to the worst case is so large and every little tweak made to a parameter or the number of bots or a genetic sequence could increase time for the algorithm to run exponentially. For an example we ran a best-case vs worst case time scenario using our current code and if the destination was within a few blocks the route was optimized within 10 minutes but if it was on the other side of our data the time is unknown as I let it run from 7:30 pm December 16 to 1:30 pm December 17 and during that time over 125000 generations had run, and they had not come close to finishing when the program was stopped.
+
+
+
+
+
+
+
+### Updates/If We Had More Time
+
+The program has a lot of assumptions that cause it to be imperfect if you were to use it in the city as streets have been changed to be straight paths instead of curved or diagonal and some single block streets were removed due to the added complexity for the bots to navigate. Other things that need to be changed/improved is our fitness equation/evaluation because if it were improved the bots would converge more efficiently allowing us to use bigger data sets without having to run the code for multiple days to see results
 ## Files
 
 * Agent.py
@@ -76,6 +87,10 @@ Agent.py also contains the genetic algorithm's fitness function.  We used a dist
 * City.py
 
 This file defines our problem space.  Included is hard coded definitions of every intersection in a 6 square mile radius of North Spokane represented as Boolean array values (True if you a robot can traverse in that direction at that intersection, False if it cannot).
+
+
+
+
 
 * Main.py
 
@@ -104,6 +119,14 @@ The file containing the core Genetic Algorithm components (Selection, Crossover,
 * map.txt
 
 A text file containing a copy of the streets utilized in the simulation
+
+
+
+
+
+
+
+
 
 ## Works Cited
 
