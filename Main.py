@@ -300,9 +300,9 @@ def game_loop():
             pygame.draw.rect(screen,
                     BLUE,
                     # x coordinate is the product of the cell width and the current column 
-                    [1150,#square,   
+                    [40,#square,   
                     # y coordinate is the product of the cell height and the current row     
-                    130,#rowGraph,     
+                    40,#rowGraph,     
                     # rectangle width
                     10,             
                     # rectangle height

@@ -50,15 +50,15 @@ class Agent:
         if DNA_array == None:
             # generate random actions/movements to seed the first generation
             for _ in range(self.DNA_length):
-                self.DNA.append(random.choice(['N', 'S', 'E', 'W']))
-                #self.DNA.append(random.choice( ['L', 'F', 'R', 'B']))
+                #self.DNA.append(random.choice(['N', 'S', 'E', 'W']))
+                self.DNA.append(random.choice( ['L', 'F', 'R', 'B']))
         # Now we turn to the secondary implementaiton for agents which happens
         # during reproduction when a new child is born
         else:
             # Another constructor to be used in the crossover function for creating new agents
             # This constructor takes an array of DNA resulting from reproduction between 2 parents
             self.DNA = DNA_array    # Give this agent his new DNA sequence
-        # spawn the agent at the start of the maze
+        # spawn the agent at the start of the city
         self.current_position_map= copy.deepcopy(city.BEGIN_LOC)
         self.previous_position_map = copy.deepcopy(city.DELIVERY_LOC)
         self.Deliv_reached = False
@@ -104,7 +104,7 @@ class Agent:
         # and whether westward movement is open
         # NOTE: WEST is up on the printed screen
         # Bot wants to go West, is that direction open?
-        if action == 'W':
+        if action == 'F':#'W':
             if(self.current_position_city[2] == 4):
                 if(city.CITY_GRID[self.current_position_city[0]][self.current_position_city[1]][3]):
                     next_pos_city[2] = 3
@@ -125,7 +125,7 @@ class Agent:
         # and whether eastward movement is open
         # NOTE: EAST is down on the printed screen
         # Bot wants to go East, is that direction open?
-        elif action == 'E':
+        elif action == 'B':#'E':
             if(self.current_position_city[2] == 4):
                 if(city.CITY_GRID[self.current_position_city[0]][self.current_position_city[1]][2] and self.current_position_city[1] != len(city.CITY_GRID[0])-1):
                     next_pos_city[2] = 2
@@ -146,7 +146,7 @@ class Agent:
         # and whether northward movement is open
         # NOTE: NORTH is left on the printed screen
         # Bot wants to go North, is that direction open?
-        elif action == 'N':
+        elif action == 'L':#'N':
             if(self.current_position_city[2] == 4):
                 if(city.CITY_GRID[self.current_position_city[0]][self.current_position_city[1]][0]):
                     next_pos_city[2] = 0
@@ -167,7 +167,7 @@ class Agent:
         # and whether Southward movement is open
         # NOTE: SOUTH is right on the printed screen
         # Bot wants to go South, is that direction open?            
-        elif action == 'S':
+        elif action == 'R':#'S':
             if(self.current_position_city[2] == 4):
                 if(city.CITY_GRID[self.current_position_city[0]][self.current_position_city[1]][1]):
                     next_pos_city[2] = 1
@@ -189,13 +189,14 @@ class Agent:
     # Function that moves the agent to its next position if a wall is not present
     # Parameters: action_iterator: An integer to iterate through the agent's DNA structure
     #             city: 2D city array that the agent is navigating
-    # Return:     changed_position: the next maze location where the agent will step to
+    # Return:     changed_position: the next city location where the agent will step to
     def move(self, action_iterator, city):
         # Establish a boolean flag that stores whether or not the agent has changed position, assume no movement
         changed_position = False
         # Determine next position by capturing the next gene representing a directional movement
         action = self.DNA[action_iterator]
         # Calculate the next position of this agent based on the DNA instruction
+        #print(city.DELIVERY_LOC)
         if(not self.Deliv_reached):
             next_position_city,next_position_map,changed_position = self.calculate_next_pos(action,city)
         
@@ -271,6 +272,6 @@ class Agent:
         # Now we pick an arbitrary number to subtract our current fitness score (distance) 
         # from this number to ensure that fitness scores will increase in value.
         # Because the distance calculated above favors smaller distances, we use this 
-        # calculation to invert the values so that shorter distances from the maze exit
+        # calculation to invert the values so that shorter distances from the city exit
         # are reflected with higher fitness scores
         self.fitness_score += (200 - distance)
