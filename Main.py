@@ -38,7 +38,7 @@ def pygame_setup(city):
     global screen
     screen = pygame.display.set_mode([City.City.CITY_SIZE[0], City.City.CITY_SIZE[1] + 200])
     # Set title of screen
-    pygame.display.set_caption("Advanced Algorithms Final Project Spring 2020")
+    pygame.display.set_caption("Advanced Algorithms Final Project Fall 2020")
     # Declaration of a clock variable that utilizes a clock function
     # from the pygame library that mediates the speed of the screen updates
     global clock
